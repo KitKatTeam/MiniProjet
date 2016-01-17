@@ -1,5 +1,7 @@
 package com.example.miniprojet.miniprojet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -7,6 +9,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
+
+import com.example.miniprojet.miniprojet.db.pojo.User;
+import com.example.miniprojet.miniprojet.restservice.UserRest;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -19,11 +26,44 @@ public class MainActivity extends ActionBarActivity {
 
 
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
+
         this.connexionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MainMapActivity.class);
-                startActivity(intent);
+
+                // get fields values
+                EditText pseudoTextField = (EditText) findViewById(R.id.pseudoTextField);
+                EditText motDePasseTextField = (EditText) findViewById(R.id.motDePasseTextField);
+                String userName = pseudoTextField.getText().toString();
+                String userPassword = motDePasseTextField.getText().toString();
+
+                // use service rest to check login
+                UserRest userRest = UserRest.getInstance();
+                User user = userRest.login(userName,userPassword);
+
+                // pass or not
+                if (user != null){
+                    Intent intent = new Intent(MainActivity.this, MainMapActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("Impossible de se connecter!");
+                    alertDialog.setMessage("user: test@gmail.com, pass: test");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+                                }
+                            });
+                    alertDialog.show();
+                }
+
+
+
+
+
             }
         });
     }

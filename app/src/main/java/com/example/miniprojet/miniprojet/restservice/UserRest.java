@@ -2,6 +2,8 @@ package com.example.miniprojet.miniprojet.restservice;
 
 
 
+import android.util.Log;
+
 import com.example.miniprojet.miniprojet.db.pojo.User;
 import com.example.miniprojet.miniprojet.restservice.util.RestService;
 
@@ -40,11 +42,15 @@ public class UserRest  extends RestService {
         String json = this.getService("login",params);
 
         User userDTO = null;
-        try {
-            userDTO = new ObjectMapper().readValue(json, User.class);
-        } catch (IOException e) {
-            e.printStackTrace();
+        Log.d("eeeeeeeeeeee ",json);
+        if (!json.equals("")){
+            try {
+                userDTO = new ObjectMapper().readValue(json, User.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
+
 
         return userDTO;
 

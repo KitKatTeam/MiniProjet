@@ -14,8 +14,6 @@ public class RestService  {
 
 
 
-    private URLActivity uRLActivity = new URLActivity();
-
     protected String source;
 
     public void setSource(String source){
@@ -33,6 +31,8 @@ public class RestService  {
         }
 
         Log.d("RestService","load "+url+parmasS+"...");
+
+        URLActivity uRLActivity = new URLActivity();
         uRLActivity.setUrl(source+url+parmasS);
         uRLActivity.execute();
 
@@ -43,6 +43,8 @@ public class RestService  {
         } catch (ExecutionException e) {
             e.printStackTrace();
         }
+
+        uRLActivity.cancel(true);
 
         return output;
 

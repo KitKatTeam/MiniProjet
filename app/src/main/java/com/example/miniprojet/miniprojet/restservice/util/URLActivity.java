@@ -1,11 +1,13 @@
 package com.example.miniprojet.miniprojet.restservice.util;
 
+import android.app.Activity;
 import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.Reader;
+import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
@@ -21,6 +23,7 @@ public class URLActivity extends AsyncTask<String, String, String> {
     public void setUrl(String url){
         this.url = url;
     }
+
 
 
     @Override
@@ -46,9 +49,7 @@ public class URLActivity extends AsyncTask<String, String, String> {
     // a string.
     private String downloadUrl(String myurl) throws IOException {
         InputStream is = null;
-        // Only display the first 500 characters of the retrieved
-        // web page content.
-        int len = 500;
+
 
 
         try {
@@ -66,7 +67,7 @@ public class URLActivity extends AsyncTask<String, String, String> {
             is = conn.getInputStream();
 
             // Convert the InputStream into a string
-            String contentAsString = readIt(is, len);
+            String contentAsString = readIt(is);
 
             return contentAsString;
 
@@ -81,17 +82,17 @@ public class URLActivity extends AsyncTask<String, String, String> {
     }
 
     // Reads an InputStream and converts it to a String.
-    public String readIt(InputStream stream, int len) throws IOException, UnsupportedEncodingException {
-        Reader reader = null;
-        reader = new InputStreamReader(stream, "UTF-8");
-        char[] buffer = new char[len];
-        reader.read(buffer);
-        return new String(buffer);
+    public String readIt(InputStream stream) throws IOException, UnsupportedEncodingException {
+
+        java.util.Scanner s = new java.util.Scanner(stream).useDelimiter("\\A");
+        String st = s.hasNext() ? s.next() : "";
+
+        return new String(st);
     }
 
 
     @Override
     protected void onPostExecute(String result) {
-
+        super.onPostExecute(result);
     }
 }
