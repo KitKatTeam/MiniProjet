@@ -1,5 +1,7 @@
 package com.example.miniprojet.miniprojet.db.pojo;
 
+import android.util.Log;
+
 import java.sql.Date;
 
 /**
@@ -7,6 +9,7 @@ import java.sql.Date;
  */
 public class User {
 
+    private Long id;
     private String nom;
     private String prenom;
     private Date dateInscription;
@@ -60,5 +63,13 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
     }
 }

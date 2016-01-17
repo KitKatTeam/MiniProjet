@@ -7,7 +7,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 /**
  * Created by loicleger on 15/01/16.
  */
-public class DatabaseHandler extends SQLiteOpenHelper {
+public class DataBaseHandler extends SQLiteOpenHelper {
     public static final String METIER_KEY = "id";
     public static final String METIER_INTITULE = "intitule";
     public static final String METIER_SALAIRE = "salaire";
@@ -19,13 +19,13 @@ public class DatabaseHandler extends SQLiteOpenHelper {
                     METIER_INTITULE + " TEXT, " +
                     METIER_SALAIRE + " REAL);";
 
-    public DatabaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
+    public DataBaseHandler(Context context, String name, SQLiteDatabase.CursorFactory factory, int version) {
         super(context, name, factory, version);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        db.execSQL();
+        //db.execSQL();
     }
 
     @Override
