@@ -3,7 +3,7 @@ package com.example.miniprojet.miniprojet.db.dao;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 
-import com.example.miniprojet.miniprojet.db.DatabaseHandler;
+import com.example.miniprojet.miniprojet.db.DataBaseHandler;
 
 /**
  * Created by loicleger on 15/01/16.
@@ -16,10 +16,10 @@ public abstract class DaoBase {
     protected final static String NOM = "database.db";
 
     protected SQLiteDatabase mDb = null;
-    protected DatabaseHandler mHandler = null;
+    protected DataBaseHandler mHandler = null;
 
     public DaoBase(Context pContext) {
-        this.mHandler = new DatabaseHandler(pContext, NOM, null, VERSION);
+        this.mHandler = new DataBaseHandler(pContext, NOM, null, VERSION);
     }
 
     public SQLiteDatabase open() {
