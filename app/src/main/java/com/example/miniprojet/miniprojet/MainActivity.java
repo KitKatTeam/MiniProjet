@@ -10,10 +10,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
 
+import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.db.pojo.User;
-import com.example.miniprojet.miniprojet.restservice.UserRest;
+import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -23,6 +23,8 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
 
 
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
@@ -38,8 +40,8 @@ public class MainActivity extends ActionBarActivity {
                 String userPassword = motDePasseTextField.getText().toString();
 
                 // use service rest to check login
-                UserRest userRest = UserRest.getInstance();
-                User user = userRest.login(userName,userPassword);
+                UserAPI userAPI = UserAPI.getInstance();
+                UserDto user = userAPI.login(userName,userPassword);
 
                 // pass or not
                 if (user != null){

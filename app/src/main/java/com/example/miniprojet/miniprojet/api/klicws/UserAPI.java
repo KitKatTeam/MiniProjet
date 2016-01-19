@@ -1,12 +1,11 @@
-package com.example.miniprojet.miniprojet.restservice;
+package com.example.miniprojet.miniprojet.api.klicws;
 
 
 
-import android.util.Log;
+import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
+import com.example.miniprojet.miniprojet.api.klicws.util.RestService;
 
-import com.example.miniprojet.miniprojet.db.pojo.User;
-import com.example.miniprojet.miniprojet.restservice.util.RestService;
-
+import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
@@ -15,15 +14,15 @@ import java.util.HashMap;
 /**
  * Created by steve on 17/01/16.
  */
-public class UserRest  extends RestService {
+public class UserAPI extends RestService {
 
 
     /**
      * Singleton
      */
-    private static UserRest instance = new UserRest();
-    private UserRest(){}
-    public static UserRest getInstance(){
+    private static UserAPI instance = new UserAPI();
+    private UserAPI(){}
+    public static UserAPI getInstance(){
         instance.setSource("http://klic-dev.herokuapp.com/");
         return instance;
     }
@@ -34,18 +33,21 @@ public class UserRest  extends RestService {
      * @param password : password of the user
      * @return user
      */
-    public User login(String email, String password){
+    public UserDto login(String email, String password){
 
         HashMap<String,String> params = new HashMap<String,String>();
         params.put("email",email);
         params.put("password",password);
         String json = this.getService("login",params);
 
-        User userDTO = null;
-        Log.d("eeeeeeeeeeee ",json);
+        UserDto userDTO = null;
+
         if (!json.equals("")){
             try {
-                userDTO = new ObjectMapper().readValue(json, User.class);
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.configure(
+                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                userDTO = mapper.readValue(json, UserDto.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
