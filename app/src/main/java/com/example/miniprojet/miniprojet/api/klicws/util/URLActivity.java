@@ -1,16 +1,15 @@
-package com.example.miniprojet.miniprojet.restservice.util;
+package com.example.miniprojet.miniprojet.api.klicws.util;
 
-import android.app.Activity;
 import android.os.AsyncTask;
 
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.io.Reader;
-import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.net.URLEncoder;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by steve on 08/01/16.
@@ -19,6 +18,15 @@ public class URLActivity extends AsyncTask<String, String, String> {
 
     private String url;
 
+    private HashMap<String,String> params;
+
+    public HashMap<String, String> getParams() {
+        return params;
+    }
+
+    public void setParams(HashMap<String, String> params) {
+        this.params = params;
+    }
 
     public void setUrl(String url){
         this.url = url;
@@ -53,12 +61,31 @@ public class URLActivity extends AsyncTask<String, String, String> {
 
 
         try {
-            URL url = new URL(myurl);
+
+            StringBuilder postData = new StringBuilder();
+            for (Map.Entry<String,String> param : params.entrySet()) {
+
+                postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
+                postData.append('=');
+                postData.append(URLEncoder.encode(param.getValue(), "UTF-8").replace(" ","%20"));
+                postData.append('&');
+            }
+            String parama = postData.toString();
+            if (!parama.equals("")){
+                parama = "?"+parama;
+            }
+
+            URL url = new URL(myurl+parama);
             HttpURLConnection conn = (HttpURLConnection) url.openConnection();
             conn.setReadTimeout(10000 /* milliseconds */);
             conn.setConnectTimeout(15000 /* milliseconds */);
             conn.setRequestMethod("GET");
             conn.setDoInput(true);
+
+
+
+
+
             // Starts the query
 
             conn.connect();

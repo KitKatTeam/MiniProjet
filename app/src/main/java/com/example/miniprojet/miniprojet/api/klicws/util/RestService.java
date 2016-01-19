@@ -1,4 +1,4 @@
-package com.example.miniprojet.miniprojet.restservice.util;
+package com.example.miniprojet.miniprojet.api.klicws.util;
 
 import android.util.Log;
 
@@ -24,16 +24,14 @@ public class RestService  {
     public String getService(String url, HashMap<String,String> params)  {
         String output = "";
 
-        String parmasS = "?";
-
+        Log.d("RestService","url "+url+"...");
         for (Map.Entry<String,String> p : params.entrySet() ) {
-            parmasS += p.getKey() + "=" + p.getValue() + "&";
+            Log.d("RestService","param " +p.getKey() + "=" + p.getValue());
         }
 
-        Log.d("RestService","load "+url+parmasS+"...");
-
         URLActivity uRLActivity = new URLActivity();
-        uRLActivity.setUrl(source+url+parmasS);
+        uRLActivity.setUrl(source+url);
+        uRLActivity.setParams(params);
         uRLActivity.execute();
 
         try {
