@@ -11,6 +11,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.db.pojo.User;
 import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
@@ -24,7 +25,7 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        ManageImages.UploadFile();
 
 
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
