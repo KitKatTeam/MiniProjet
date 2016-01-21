@@ -5,15 +5,13 @@ package com.example.miniprojet.miniprojet.api.klicws;
 import android.util.Log;
 
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
-import com.example.miniprojet.miniprojet.api.klicws.util.RestService;
-import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.example.miniprojet.miniprojet.api.util.RestService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import org.apache.commons.collections.MultiHashMap;
 
 
 import java.io.IOException;
-import java.util.HashMap;
 
 /**
  * Created by steve on 17/01/16.

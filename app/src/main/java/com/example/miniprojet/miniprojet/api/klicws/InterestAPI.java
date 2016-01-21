@@ -3,13 +3,10 @@ package com.example.miniprojet.miniprojet.api.klicws;
 
 
 
-import android.util.Log;
-
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
-import com.example.miniprojet.miniprojet.api.klicws.util.RestService;
+import com.example.miniprojet.miniprojet.api.util.RestService;
 import com.example.miniprojet.miniprojet.db.pojo.Interest;
-import com.fasterxml.jackson.databind.DeserializationConfig;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 

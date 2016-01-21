@@ -1,4 +1,4 @@
-package com.example.miniprojet.miniprojet.api.klicws.util;
+package com.example.miniprojet.miniprojet.api.util;
 
 import android.os.AsyncTask;
 
@@ -10,7 +10,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;

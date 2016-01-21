@@ -1,12 +1,9 @@
-package com.example.miniprojet.miniprojet.api.klicws.util;
+package com.example.miniprojet.miniprojet.api.util;
 
 import android.util.Log;
 
 import org.apache.commons.collections.MultiHashMap;
-import org.apache.commons.collections.MultiMap;
 
-import java.net.URLEncoder;
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
