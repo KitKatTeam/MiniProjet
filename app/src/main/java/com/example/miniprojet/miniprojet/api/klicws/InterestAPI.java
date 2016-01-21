@@ -3,18 +3,22 @@ package com.example.miniprojet.miniprojet.api.klicws;
 
 
 
+import android.util.Log;
+
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.util.RestService;
 import com.example.miniprojet.miniprojet.db.pojo.Interest;
 
 
+import org.apache.commons.collections.MultiHashMap;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by steve on 17/01/16.
@@ -40,7 +44,7 @@ public class InterestAPI extends RestService {
      */
     public List<TagDto> getTags(Long idInterest) {
 
-        HashMap<String,String> params = new HashMap<String,String>();
+        MultiHashMap params = new MultiHashMap();
 
         String json = this.getService("interest/"+idInterest.toString()+"/tags",params);
         List<TagDto> result = null;
@@ -70,7 +74,7 @@ public class InterestAPI extends RestService {
      */
     public Interest addTag( Long idInterest, TagDto tag) {
 
-        HashMap<String,String> params = tag.toMap();
+        MultiHashMap params = tag.toMap();
         String json = this.getService("interest/"+idInterest+"/addTag",params);
 
         Interest result = null;
@@ -97,7 +101,7 @@ public class InterestAPI extends RestService {
      */
     public Boolean delete(long id) {
 
-        HashMap<String,String> params = new HashMap<>();
+        MultiHashMap params = new MultiHashMap();
 
         Long idL = id;
 
@@ -130,7 +134,7 @@ public class InterestAPI extends RestService {
      */
     public InterestDto get(long id) {
 
-        HashMap<String,String> params = new HashMap<>();
+        MultiHashMap params = new MultiHashMap();
 
         String json = this.getService("interest/"+id,params);
 
@@ -159,7 +163,7 @@ public class InterestAPI extends RestService {
      */
     public InterestDto update(InterestDto interest) {
 
-        HashMap<String,String> params = interest.toMap();
+        MultiHashMap params = interest.toMap();
 
         String json = this.getService("interest/update",params);
 
@@ -187,7 +191,7 @@ public class InterestAPI extends RestService {
      */
     public InterestDto add(InterestDto interest) {
 
-        HashMap<String,String> params = interest.toMap();
+        MultiHashMap params = interest.toMap();
 
         String json = this.getService("interest/add",params);
 
@@ -214,7 +218,7 @@ public class InterestAPI extends RestService {
      */
     public List<InterestDto> getAll() {
 
-        HashMap<String,String> params = new HashMap<String,String>();
+        MultiHashMap params = new MultiHashMap();
 
         String json = this.getService("interest/all",params);
         List<InterestDto> interests = null;
@@ -234,6 +238,44 @@ public class InterestAPI extends RestService {
         return interests;
 
     }
+
+
+
+
+    /**
+     * Get all interests coresponding to tags
+     * @return
+     */
+    public List<InterestDto> findByTags(List<String> keys) {
+
+        MultiHashMap params = new MultiHashMap();
+
+        String listParams = "";
+
+        for (String s : keys){
+            params.put("keys",s);
+        }
+
+
+        String json = this.getService("interest/getByTags",params);
+        List<InterestDto> interests = null;
+
+        if (!json.equals("")){
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                mapper.configure(
+                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
+                interests = mapper.readValue(json,mapper.getTypeFactory().constructCollectionType(List.class, InterestDto.class));
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return interests;
+
+    }
+
 
 
 }

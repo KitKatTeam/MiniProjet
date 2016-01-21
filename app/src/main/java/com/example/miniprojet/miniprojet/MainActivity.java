@@ -5,15 +5,21 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
+import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.db.pojo.User;
 import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
 
@@ -23,6 +29,20 @@ public class MainActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        InterestAPI interestAPI = InterestAPI.getInstance();
+        interestAPI.getAll();
+
+        List<String> tags = new ArrayList<String>();
+        tags.add("azd");
+        tags.add("recyclage");
+
+        List<InterestDto> inte = interestAPI.findByTags(tags);
+
+        for (InterestDto i : inte){
+            Log.d("ok",i.toMap().toString());
+        }
 
 
 

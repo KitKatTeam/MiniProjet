@@ -5,6 +5,7 @@ package com.example.miniprojet.miniprojet.api.klicws;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.api.klicws.util.RestService;
 
+import org.apache.commons.collections.MultiHashMap;
 import org.codehaus.jackson.map.DeserializationConfig;
 import org.codehaus.jackson.map.ObjectMapper;
 
@@ -35,7 +36,7 @@ public class UserAPI extends RestService {
      */
     public UserDto login(String email, String password){
 
-        HashMap<String,String> params = new HashMap<String,String>();
+        MultiHashMap params = new MultiHashMap();
         params.put("email",email);
         params.put("password",password);
         String json = this.getService("login",params);
