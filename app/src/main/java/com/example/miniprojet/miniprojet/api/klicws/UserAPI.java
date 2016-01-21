@@ -2,11 +2,15 @@ package com.example.miniprojet.miniprojet.api.klicws;
 
 
 
+import android.util.Log;
+
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.api.klicws.util.RestService;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
+import org.apache.commons.collections.MultiHashMap;
+
 
 import java.io.IOException;
 import java.util.HashMap;
@@ -35,18 +39,19 @@ public class UserAPI extends RestService {
      */
     public UserDto login(String email, String password){
 
-        HashMap<String,String> params = new HashMap<String,String>();
+        MultiHashMap params = new MultiHashMap();
         params.put("email",email);
         params.put("password",password);
         String json = this.getService("login",params);
 
         UserDto userDTO = null;
 
+        Log.d("eee",json);
+
+
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 userDTO = mapper.readValue(json, UserDto.class);
             } catch (IOException e) {
                 e.printStackTrace();
