@@ -1,0 +1,28 @@
+        InterestAPI interestAPI = InterestAPI.getInstance();
+        List<InterestDto> interests = interestAPI.getAll();
+
+        Log.d("eeeaaaa ",interests.get(1).getDescription());
+
+        InterestDto interestDto = new InterestDto();
+        interestDto.setDescription("aaaaaaaaaaa dsfhj dsfsda");
+        interestDto.setDate(new Date());
+        interestDto.setPositionX(12.2F);
+        interestDto.setPositionY(11F);
+        interestAPI.add(interestDto);
+
+        interestDto = interestAPI.get(2);
+        Log.d("eeeaaaa ",interestDto.getDescription());
+
+        interestAPI.delete(3);
+
+        TagDto tag = new TagDto();
+        tag.setNom("Orangina");
+        tag.setPositionBottomX(5666.4F);
+
+        interestAPI.addTag(1L,tag);
+
+
+        List<TagDto> tags = interestAPI.getTags(1L);
+        for(TagDto t : tags){
+            Log.d("ZZZZZZ",t.getNom());
+        }

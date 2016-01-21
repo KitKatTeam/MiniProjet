@@ -116,11 +116,12 @@ public class MainLocationListener implements LocationListener {
                 mc.animateTo(p);
                 mc.setCenter(p);*/
         }
-
+        if (this.mapActivity instanceof MapsActivity) {
         this.location = location;
         ((MapsActivity)this.mapActivity).getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(location.getLatitude(), location.getLongitude()), 13));
         ((MapsActivity)this.mapActivity).getMap().addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Itadakimasu !!!"));;
+        }
     }
 
     public void pause() {

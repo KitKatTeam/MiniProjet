@@ -1,5 +1,7 @@
 package com.example.miniprojet.miniprojet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
@@ -8,6 +10,11 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
+import android.widget.EditText;
+
+import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
+import com.example.miniprojet.miniprojet.db.pojo.User;
+import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -18,13 +25,44 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
         this.connexionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this, MapsActivity.class);
-                startActivity(intent);
+
+                // get fields values
+                EditText pseudoTextField = (EditText) findViewById(R.id.pseudoTextField);
+                EditText motDePasseTextField = (EditText) findViewById(R.id.motDePasseTextField);
+                String userName = pseudoTextField.getText().toString();
+                String userPassword = motDePasseTextField.getText().toString();
+
+                // use service rest to check login
+                UserAPI userAPI = UserAPI.getInstance();
+                UserDto user = userAPI.login(userName,userPassword);
+
+                // pass or not
+                if (user != null){
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
+                    alertDialog.setTitle("Impossible de se connecter!");
+                    alertDialog.setMessage("user: test@gmail.com, pass: test");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+                                }
+                            });
+                    alertDialog.show();
+                }
+
+
+
+
+
             }
         });
     }
