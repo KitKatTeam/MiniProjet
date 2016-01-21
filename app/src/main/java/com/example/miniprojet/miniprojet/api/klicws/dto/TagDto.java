@@ -1,6 +1,8 @@
 package com.example.miniprojet.miniprojet.api.klicws.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.apache.commons.collections.MultiHashMap;
 
 import java.io.Serializable;
@@ -9,8 +11,8 @@ import java.util.HashMap;
 /**
  * Created by loicleger on 16/01/16.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class TagDto implements Serializable  {
-
 
 	private long id;
 

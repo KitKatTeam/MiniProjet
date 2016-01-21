@@ -5,7 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Log;
+import android.support.v7.app.AppCompatActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -18,10 +18,7 @@ import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.db.pojo.User;
 import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 
-import java.util.ArrayList;
-import java.util.List;
-
-public class MainActivity extends ActionBarActivity {
+public class MainActivity extends AppCompatActivity {
 
     private Button connexionButton;
 
@@ -31,24 +28,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
 
-        InterestAPI interestAPI = InterestAPI.getInstance();
-        interestAPI.getAll();
-
-        List<String> tags = new ArrayList<String>();
-        tags.add("azd");
-        tags.add("recyclage");
-
-        List<InterestDto> inte = interestAPI.findByTags(tags);
-
-        for (InterestDto i : inte){
-            Log.d("ok",i.toMap().toString());
-        }
-
-
-
-
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
-
         this.connexionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -65,7 +45,7 @@ public class MainActivity extends ActionBarActivity {
 
                 // pass or not
                 if (user != null){
-                    Intent intent = new Intent(MainActivity.this, MainMapActivity.class);
+                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
                     startActivity(intent);
                 }
                 else{

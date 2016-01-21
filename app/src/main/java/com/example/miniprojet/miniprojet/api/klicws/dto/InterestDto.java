@@ -1,6 +1,8 @@
 package com.example.miniprojet.miniprojet.api.klicws.dto;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
 import org.apache.commons.collections.MultiHashMap;
 
 import java.io.Serializable;
@@ -11,6 +13,7 @@ import java.util.List;
 /**
  * Created by steve on 19/01/16.
  */
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class InterestDto implements Serializable {
 
     private long id;

@@ -9,16 +9,16 @@ import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.util.RestService;
 import com.example.miniprojet.miniprojet.db.pojo.Interest;
+import com.fasterxml.jackson.databind.DeserializationConfig;
+import com.fasterxml.jackson.databind.ObjectMapper;
 
 
 import org.apache.commons.collections.MultiHashMap;
-import org.codehaus.jackson.map.DeserializationConfig;
-import org.codehaus.jackson.map.ObjectMapper;
+
 
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+
 
 /**
  * Created by steve on 17/01/16.
@@ -52,8 +52,6 @@ public class InterestAPI extends RestService {
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 result = mapper.readValue(json,mapper.getTypeFactory().constructCollectionType(List.class, TagDto.class));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -82,9 +80,6 @@ public class InterestAPI extends RestService {
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 result = mapper.readValue(json,Interest.class);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -113,9 +108,6 @@ public class InterestAPI extends RestService {
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 result = mapper.readValue(json,Boolean.class);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -143,9 +135,6 @@ public class InterestAPI extends RestService {
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 interest = mapper.readValue(json,InterestDto.class);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -172,9 +161,6 @@ public class InterestAPI extends RestService {
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 interest = mapper.readValue(json,InterestDto.class);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -200,9 +186,6 @@ public class InterestAPI extends RestService {
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 interest = mapper.readValue(json,InterestDto.class);
             } catch (IOException e) {
                 e.printStackTrace();
@@ -226,8 +209,6 @@ public class InterestAPI extends RestService {
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 interests = mapper.readValue(json,mapper.getTypeFactory().constructCollectionType(List.class, InterestDto.class));
             } catch (IOException e) {
                 e.printStackTrace();
@@ -263,8 +244,6 @@ public class InterestAPI extends RestService {
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                mapper.configure(
-                        DeserializationConfig.Feature.FAIL_ON_UNKNOWN_PROPERTIES, false);
                 interests = mapper.readValue(json,mapper.getTypeFactory().constructCollectionType(List.class, InterestDto.class));
             } catch (IOException e) {
                 e.printStackTrace();
