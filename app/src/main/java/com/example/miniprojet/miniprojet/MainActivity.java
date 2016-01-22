@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.db.pojo.User;
@@ -24,6 +25,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        EditText pseudoTextField = (EditText) findViewById(R.id.pseudoTextField);
+        pseudoTextField.setText("test@gmail.com", TextView.BufferType.EDITABLE);
+        EditText motDePasseTextField = (EditText) findViewById(R.id.motDePasseTextField);
+        motDePasseTextField.setText("test", TextView.BufferType.EDITABLE);
 
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
         this.connexionButton.setOnClickListener(new View.OnClickListener() {
