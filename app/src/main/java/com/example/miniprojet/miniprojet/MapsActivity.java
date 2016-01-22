@@ -7,7 +7,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
-import android.location.Criteria;
 import android.location.Location;
 import android.location.LocationManager;
 import android.net.ConnectivityManager;
@@ -22,17 +21,16 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
+//import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.File;
 import java.util.List;
@@ -47,6 +45,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private Uri imageUri;
     private InterestAPI interestAPI;
     List<InterestDto> interests;
+    // Declare a variable for the cluster manager.
+    //private ClusterManager<CustomMarker> mClusterManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,6 +63,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             public void onClick(View view) {
                 //Création d'un intent
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                //Intent intent2 = new Intent(this, "android.media.action.IMAGE_CAPTURE");
 
                 //Création du fichier image
                 File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
@@ -135,6 +136,24 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
 
+
+
+
+        // Position the map.
+//getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
+
+        // Initialize the manager with the context and the map.
+        // (Activity extends context, so we can pass 'this' in the constructor.)
+       /* mClusterManager = new ClusterManager<CustomMarker>(this, this.map);
+        mClusterManager.setRenderer(new CustomMarkernRendered(getApplicationContext(), getMap(), mClusterManager));
+
+        // Point the map's listeners at the listeners implemented by the cluster
+        // manager.
+        this.map.setOnCameraChangeListener(mClusterManager);
+        this.map.setOnMarkerClickListener(mClusterManager);*/
+
+
+
         this.initInterests();
     }
 
@@ -146,6 +165,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             Float lng = interest.getPositionY();
             String title = interest.getDescription();
             this.map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
+           // mClusterManager.addItem(new CustomMarker(lat, lng, title));
         }
     }
 
@@ -163,21 +183,11 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Uri selectedImage = imageUri;
                     getContentResolver().notifyChange(selectedImage, null);
                     ImageView imageView = new ImageView(this.getApplicationContext());
-                    ContentResolver cr = getContentResolver();
-                    Bitmap bitmap;
-                    try {
-                        bitmap = android.provider.MediaStore.Images.Media
-                                .getBitmap(cr, selectedImage);
 
-                        imageView.setImageBitmap(bitmap);
-                        //Affichage de l'infobulle
-                        Toast.makeText(this, selectedImage.toString(),
-                                Toast.LENGTH_LONG).show();
-                    } catch (Exception e) {
-                        Toast.makeText(this, "Failed to load", Toast.LENGTH_SHORT)
-                                .show();
-                        Log.e("Camera", e.toString());
-                    }
+                    // Transfert vers une nouvelle activité
+                    Intent intent = new Intent(MapsActivity.this, PhotoEditorActivity.class);
+                    intent.putExtra("imageUri", selectedImage);
+                    startActivity(intent);
                 }
         }
     }
