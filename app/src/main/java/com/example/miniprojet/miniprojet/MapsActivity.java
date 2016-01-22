@@ -24,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -150,6 +151,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .getBitmap(cr, selectedImage);
 
                         imageView.setImageBitmap(bitmap);
+                        ManageImages.UploadFile(selectedImage);
                         //Affichage de l'infobulle
                         Toast.makeText(this, selectedImage.toString(),
                                 Toast.LENGTH_LONG).show();

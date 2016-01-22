@@ -17,24 +17,13 @@ import java.io.File;
  * Created by loicleger on 21/01/16.
  */
 public class ManageImages {
-    public static void UploadFile()
+    public static void UploadFile(Uri imageUri)
     {
-        // Création de l'intent de type ACTION_IMAGE_CAPTURE
-        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-        // Création d'un fichier de type image
-        File photo = new File("/mnt/emmc/",  "Pic.jpg");
-        // On fait le lien entre la photo prise et le fichier que l'on vient de créer
-        intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
-        Uri imageUri;
-
-        imageUri = Uri.fromFile(photo);
-
         String existingBucketName = "kitkatdevimages";
         String keyName = "Pic.jpg";
 
-        String filePath = "/Users/loicleger/Downloads/avatar10-4.jpg";
         String amazonFileUploadLocationOriginal = existingBucketName + "/images/";
-        AWSCredentials credential = new BasicAWSCredentials("access key", "secret key");
+        AWSCredentials credential = new BasicAWSCredentials("LlegerDev", "jauzion82");
 
 // Transfer a file to an S3 bucket.
 
