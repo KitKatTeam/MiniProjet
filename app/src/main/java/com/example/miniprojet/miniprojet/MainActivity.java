@@ -12,6 +12,8 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
+import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
+import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.db.pojo.User;
 import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
 
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
         this.connexionButton.setOnClickListener(new View.OnClickListener() {

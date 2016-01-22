@@ -1,9 +1,13 @@
-package com.example.miniprojet.miniprojet.api.klicws.util;
+package com.example.miniprojet.miniprojet.api.util;
 
 import android.util.Log;
 
-import java.util.HashMap;
+import org.apache.commons.collections.MultiHashMap;
+
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -21,13 +25,27 @@ public class RestService  {
     }
 
 
-    public String getService(String url, HashMap<String,String> params)  {
+    public String getService(String url, MultiHashMap params)  {
         String output = "";
 
-        Log.d("RestService","url "+url+"...");
-        for (Map.Entry<String,String> p : params.entrySet() ) {
-            Log.d("RestService","param " +p.getKey() + "=" + p.getValue());
+        String pa = "?";
+
+        Set set = params.entrySet();
+        Iterator i = set.iterator();
+
+
+        while (i.hasNext()) {
+            Map.Entry<String, List<String>> me = (Map.Entry) i.next();
+
+            for(int j = 0 ; j< me.getValue().size(); j++ )
+            {
+                pa = pa +me.getKey() + "=" + me.getValue().get(j) + "&";
+            }
+
         }
+
+
+        Log.d("RestService","url "+url +pa);
 
         URLActivity uRLActivity = new URLActivity();
         uRLActivity.setUrl(source+url);
