@@ -1,6 +1,8 @@
-package com.example.miniprojet.miniprojet.api.klicws.util;
+package com.example.miniprojet.miniprojet.api.util;
 
 import android.os.AsyncTask;
+
+import org.apache.commons.collections.MultiHashMap;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -8,8 +10,10 @@ import java.io.UnsupportedEncodingException;
 import java.net.HttpURLConnection;
 import java.net.URL;
 import java.net.URLEncoder;
-import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by steve on 08/01/16.
@@ -18,13 +22,13 @@ public class URLActivity extends AsyncTask<String, String, String> {
 
     private String url;
 
-    private HashMap<String,String> params;
+    private MultiHashMap params;
 
-    public HashMap<String, String> getParams() {
+    public MultiHashMap getParams() {
         return params;
     }
 
-    public void setParams(HashMap<String, String> params) {
+    public void setParams(MultiHashMap params) {
         this.params = params;
     }
 
@@ -63,13 +67,22 @@ public class URLActivity extends AsyncTask<String, String, String> {
         try {
 
             StringBuilder postData = new StringBuilder();
-            for (Map.Entry<String,String> param : params.entrySet()) {
 
-                postData.append(URLEncoder.encode(param.getKey(), "UTF-8"));
-                postData.append('=');
-                postData.append(URLEncoder.encode(param.getValue(), "UTF-8").replace(" ","%20"));
-                postData.append('&');
+            Set set = params.entrySet();
+            Iterator i = set.iterator();
+            while (i.hasNext()) {
+                Map.Entry<String, List<String>> me = (Map.Entry) i.next();
+
+                for(int j = 0 ; j< me.getValue().size(); j++ )
+                {
+                    postData.append(URLEncoder.encode(me.getKey(), "UTF-8"));
+                    postData.append('=');
+                    postData.append(URLEncoder.encode(me.getValue().get(j), "UTF-8").replace(" ","%20"));
+                    postData.append('&');
+                }
+
             }
+
             String parama = postData.toString();
             if (!parama.equals("")){
                 parama = "?"+parama;

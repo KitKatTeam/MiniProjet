@@ -13,6 +13,8 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
+import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
+import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.db.pojo.User;
 import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
