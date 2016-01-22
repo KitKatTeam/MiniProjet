@@ -24,6 +24,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
+import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -43,9 +45,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     MainLocationListener locationListener;
     private ImageButton bouton;
     private Uri imageUri;
+    private InterestAPI interestAPI;
+    List<InterestDto> interests;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
+        this.interestAPI = InterestAPI.getInstance();
+
 
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
@@ -127,6 +134,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
+
+        this.initInterests();
+    }
+
+    private void initInterests() {
+
+        this.interests = this.interestAPI.getAll();
+        for (InterestDto interest : interests) {
+            Float lat = interest.getPositionX();
+            Float lng = interest.getPositionY();
+            String title = interest.getDescription();
+            this.map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
+        }
     }
 
     public GoogleMap getMap() {
