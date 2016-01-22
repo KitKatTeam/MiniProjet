@@ -33,4 +33,5 @@ dependencies {
     compile 'com.amazonaws:aws-android-sdk-s3:2.+'
     //compile 'com.google.android.gms:play-services:8.3.0'
     //compile 'com.google.android.gms:play-services:7.0.0'
+    compile 'com.google.android.gms:play-services:8.4.0'
 }
