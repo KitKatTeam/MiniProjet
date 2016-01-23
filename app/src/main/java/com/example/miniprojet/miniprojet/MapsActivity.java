@@ -44,6 +44,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     MainLocationListener locationListener;
     private ImageButton bouton;
     private Uri imageUri;
+    private File photo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -59,9 +60,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
 
                 //Création du fichier image
-                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
-                intent.putExtra(MediaStore.EXTRA_OUTPUT,
-                        Uri.fromFile(photo));
+                photo = new File("/mnt/emmc/",  "Pic.jpg");
+                // On fait le lien entre la photo prise et le fichier que l'on vient de créer
+                intent.putExtra(MediaStore.EXTRA_OUTPUT, Uri.fromFile(photo));
+
                 imageUri = Uri.fromFile(photo);
 
                 //On lance l'intent
@@ -151,7 +153,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                                 .getBitmap(cr, selectedImage);
 
                         imageView.setImageBitmap(bitmap);
-                        ManageImages.UploadFile(selectedImage);
+                        ManageImages manageImages = new ManageImages();
+                        manageImages.setContext(getApplicationContext());
+                        manageImages.setPhoto(photo);
+                        manageImages.execute();
                         //Affichage de l'infobulle
                         Toast.makeText(this, selectedImage.toString(),
                                 Toast.LENGTH_LONG).show();
