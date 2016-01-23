@@ -124,6 +124,8 @@ public class MainLocationListener implements LocationListener {
                 new LatLng(location.getLatitude(), location.getLongitude()), 13));
         ((MapsActivity)this.mapActivity).getMap().addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Itadakimasu !!!").icon(BitmapDescriptorFactory
                 .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            ((MapsActivity)this.mapActivity).getMap().addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Itadakimasu !!!").icon(BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
         }
     }
 
