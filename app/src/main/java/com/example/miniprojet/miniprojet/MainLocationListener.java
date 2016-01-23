@@ -12,6 +12,7 @@ import android.support.v4.app.ActivityCompat;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
@@ -120,7 +121,9 @@ public class MainLocationListener implements LocationListener {
         this.location = location;
         ((MapsActivity)this.mapActivity).getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(location.getLatitude(), location.getLongitude()), 13));
-        ((MapsActivity)this.mapActivity).getMap().addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Itadakimasu !!!"));
+            ((MapsActivity)this.mapActivity).getMap().addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Itadakimasu !!!").icon(BitmapDescriptorFactory
+                    .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+
         }
     }
 
