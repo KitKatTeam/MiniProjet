@@ -5,9 +5,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,22 +13,17 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
-import com.example.miniprojet.miniprojet.api.klicws.TagAPI;
-import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
-import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
+import com.example.miniprojet.miniprojet.activity.SubscriptionActivity;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
-import com.example.miniprojet.miniprojet.db.pojo.User;
 import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
 
-import java.util.List;
-
 public class MainActivity extends AppCompatActivity {
 
     private Button connexionButton;
+    private Button inscriptionButton;
     /**
      * ATTENTION: This was auto-generated to implement the App Indexing API.
      * See https://g.co/AppIndexing/AndroidStudio for more information.
@@ -46,6 +39,15 @@ public class MainActivity extends AppCompatActivity {
         pseudoTextField.setText("test@gmail.com", TextView.BufferType.EDITABLE);
         EditText motDePasseTextField = (EditText) findViewById(R.id.motDePasseTextField);
         motDePasseTextField.setText("test", TextView.BufferType.EDITABLE);
+
+        this.inscriptionButton = (Button) findViewById(R.id.inscriptionButton);
+        this.inscriptionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(MainActivity.this, SubscriptionActivity.class);
+                startActivity(intent);
+            }
+        });
 
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
         this.connexionButton.setOnClickListener(new View.OnClickListener() {

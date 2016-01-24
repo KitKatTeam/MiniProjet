@@ -44,7 +44,35 @@ public class UserAPI extends RestService {
 
         UserDto userDTO = null;
 
-        Log.d("eee",json);
+        if (!json.equals("")){
+            try {
+                ObjectMapper mapper = new ObjectMapper();
+                userDTO = mapper.readValue(json, UserDto.class);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+
+        return userDTO;
+
+    }
+
+    /**
+     * For new user
+     * @param email :  email for the user
+     * @param password : password of the user
+     * @return user
+     */
+    public UserDto subscribe(String name,String email, String password){
+
+        MultiHashMap params = new MultiHashMap();
+        params.put("name",email);
+        params.put("email",email);
+        params.put("password",password);
+        String json = this.getService("subscribe",params);
+
+        UserDto userDTO = null;
 
 
         if (!json.equals("")){
