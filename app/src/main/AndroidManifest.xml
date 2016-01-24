@@ -33,12 +33,14 @@
         <activity
             android:name=".MainMapActivity"
             android:label="@string/app_name">
-
         </activity>
         <activity
             android:name=".PhotoEditorActivity"
             android:label="@string/app_name">
-
+        </activity>
+        <activity
+            android:name=".InterestEditorActivity"
+            android:label="@string/app_name">
         </activity>
 
         <uses-library android:name="com.google.android.maps" android:required="false"/>

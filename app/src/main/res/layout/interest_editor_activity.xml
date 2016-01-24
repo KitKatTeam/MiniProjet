@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.miniprojet.miniprojet.InterestEditorActivity">
+
+
+    <ImageView
+        android:layout_width="166dp"
+        android:layout_height="166dp"
+        android:id="@+id/imageView"
+        android:layout_gravity="center_horizontal|top"
+        android:layout_below="@+id/imageButton2"
+        android:layout_centerHorizontal="true" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/descriptionTextField"
+        android:layout_gravity="center_horizontal|bottom"
+        android:layout_below="@+id/descriptionTextView"
+        android:layout_alignLeft="@+id/descriptionTextView"
+        android:layout_alignStart="@+id/descriptionTextView" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Finaliser"
+        android:id="@+id/finalizeButton"
+        android:layout_gravity="right|bottom"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/imageButton2"
+        android:layout_gravity="left|bottom" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Description"
+        android:id="@+id/descriptionTextView"
+        android:layout_gravity="left|bottom"
+        android:layout_below="@+id/tagListTextField"
+        android:layout_toRightOf="@+id/imageButton2"
+        android:layout_toEndOf="@+id/imageButton2" />
+
+    <EditText
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:inputType="textMultiLine"
+        android:ems="10"
+        android:id="@+id/tagListTextField"
+        android:layout_gravity="right|center_vertical"
+        android:layout_below="@+id/tagListTextView"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:text="Liste des tags (séparés par des virgules)"
+        android:id="@+id/tagListTextView"
+        android:layout_gravity="left|center_vertical"
+        android:layout_centerVertical="true"
+        android:layout_alignLeft="@+id/descriptionTextView"
+        android:layout_alignStart="@+id/descriptionTextView" />
+</RelativeLayout>

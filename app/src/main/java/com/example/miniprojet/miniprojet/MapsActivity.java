@@ -26,6 +26,7 @@ import android.widget.Toast;
 
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
+import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
@@ -37,6 +38,7 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
@@ -53,7 +55,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     //private ClusterManager<CustomMarker> mClusterManager;
     private ImageView image;
     // Declare a variable for the cluster manager.
-
+    UserDto connectedUser;
 
 
     @Override
@@ -104,6 +106,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
+
+        this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
 
     }
 
@@ -201,9 +205,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     Bitmap bitmap;
                     this.image = (ImageView) findViewById(R.id.imageView);
                     try {
+// GEOLOCALISER
                         bitmap = MediaStore.Images.Media
                                 .getBitmap(cr, selectedImage);
-                        this.image.setImageBitmap(bitmap);
                         //Affichage de l'infobulle
                         Toast.makeText(this, selectedImage.toString(),
                                 Toast.LENGTH_LONG).show();
@@ -214,6 +218,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                         Intent intent = new Intent(MapsActivity.this, PhotoEditorActivity.class);
                         intent.putExtra("imageUri", selectedImage);
+                        intent.putExtra("connectedUser", connectedUser);
+                        intent.putExtra("location", this.locationListener.getLocation());
+                        intent.putExtra("latitude", this.locationListener.getLocation().getLatitude());
+                        intent.putExtra("longitude", this.locationListener.getLocation().getLongitude());
                         startActivity(intent);
                     } catch (IOException e) {
                         e.printStackTrace();
@@ -221,5 +229,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
                 }
         }
+    }
+
+    public void setLocation(Location location) {
+        this.location = location;
     }
 }
