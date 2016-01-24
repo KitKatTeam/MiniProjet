@@ -67,6 +67,7 @@ public class MainActivity extends AppCompatActivity {
                 // pass or not
                 if (user != null) {
                     Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    intent.putExtra("connectedUser", user);
                     startActivity(intent);
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();

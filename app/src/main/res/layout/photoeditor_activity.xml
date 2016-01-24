@@ -7,8 +7,8 @@
     tools:context="com.example.miniprojet.miniprojet.PhotoEditorActivity">
 
     <ImageView
-        android:layout_width="584dp"
-        android:layout_height="550dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:layout_gravity="center" />
 
@@ -23,14 +23,14 @@
     <Button
         android:layout_width="193dp"
         android:layout_height="wrap_content"
-        android:text="Annuler"
+        android:text="Nettoyer"
         android:id="@+id/boutonAnnuler"
         android:layout_gravity="left|bottom" />
 
     <Button
         android:layout_width="187dp"
         android:layout_height="wrap_content"
-        android:text="Valider"
+        android:text="Suivant"
         android:id="@+id/boutonValider"
         android:layout_gravity="right|bottom" />
 </FrameLayout>

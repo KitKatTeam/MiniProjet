@@ -23,21 +23,26 @@
             android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
+
         <activity
             android:name=".MainActivity"
             android:label="@string/app_name"></activity>
         <activity
             android:name=".MainMapActivity"
-            android:label="@string/app_name"></activity>
+            android:label="@string/app_name">
+        </activity>
         <activity
             android:name=".PhotoEditorActivity"
-            android:label="@string/app_name"></activity>
-
-        <activity android:name=".activity.SubscriptionActivity"></activity>
+            android:label="@string/app_name">
+        </activity>
+        <activity
+            android:name=".InterestEditorActivity"
+            android:label="@string/app_name">
+        </activity>
 
         <uses-library
             android:name="com.google.android.maps"
@@ -64,8 +69,6 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
-
-
     </application>
 
 </manifest>
