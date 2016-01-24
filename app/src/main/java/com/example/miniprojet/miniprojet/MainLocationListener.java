@@ -71,16 +71,10 @@ public class MainLocationListener implements LocationListener {
             }
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, this);
         }
-        if (this.mapActivity instanceof MainMapActivity) {
-            ((MainMapActivity) this.mapActivity).getLocationTV().append("Provider " + this.locatioManagerListened + " enabled");
-        }
     }
 
     @Override
     public void onProviderDisabled(String provider) {
-        if (this.mapActivity instanceof MainMapActivity) {
-            ((MainMapActivity) this.mapActivity).getLocationTV().append("Provider " + this.locatioManagerListened + " disabled");
-        }
 
 
         if (provider.equals(LocationManager.GPS_PROVIDER.toString()) && this.locatioManagerListened.equals(LocationManager.GPS_PROVIDER))
@@ -111,13 +105,6 @@ public class MainLocationListener implements LocationListener {
 
     @Override
     public void onLocationChanged(Location location) {
-        if (this.mapActivity instanceof MainMapActivity) {
-            ((MainMapActivity) this.mapActivity).getLocationTV().append(this.locatioManagerListened + "Latitude " + location.getLatitude() + " et longitude " + location.getLongitude());
-//        this.mainMapActivity.getLocationTV().setText(this.mainMapActivity.getLocationTV().getText() + " " + location.getLatitude() + " " + location.getLongitude());
-                /*GeoPoint p = new GeoPoint((int) (location.getLatitude() * 1E6), (int) (location.getLongitude() * 1E6));
-                mc.animateTo(p);
-                mc.setCenter(p);*/
-        }
         if (this.mapActivity instanceof MapsActivity) {
         this.location = location;
         ((MapsActivity)this.mapActivity).getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(
