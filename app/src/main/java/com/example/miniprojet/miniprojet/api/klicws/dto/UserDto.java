@@ -1,5 +1,7 @@
 package com.example.miniprojet.miniprojet.api.klicws.dto;
 
+import android.util.Log;
+
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 import java.io.Serializable;
@@ -21,7 +23,10 @@ public class UserDto implements Serializable {
 
     private String email;
 
-    private String password;
+	private String password;
+
+
+
 
 	public long getId() {
 		return id;

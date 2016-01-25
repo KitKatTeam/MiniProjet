@@ -45,13 +45,13 @@ public class SubscriptionActivity extends AppCompatActivity {
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
                                     dialog.dismiss();
-
+                                    Intent intent = new Intent(SubscriptionActivity.this, MainActivity.class);
+                                    startActivity(intent);
                                 }
                             });
                     alertDialog.show();
 
-                    Intent intent = new Intent(SubscriptionActivity.this, MainActivity.class);
-                    startActivity(intent);
+
                 }else{
                     AlertDialog alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
                     alertDialog.setTitle("Impossible d'ajouter un nouvel utilisateur!");
