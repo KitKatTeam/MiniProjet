@@ -1,4 +1,4 @@
-package com.example.miniprojet.miniprojet;
+package com.example.miniprojet.miniprojet.rendu;
 
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;

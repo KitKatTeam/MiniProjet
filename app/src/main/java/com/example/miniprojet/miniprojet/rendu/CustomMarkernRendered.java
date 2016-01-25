@@ -1,4 +1,4 @@
-package com.example.miniprojet.miniprojet;
+package com.example.miniprojet.miniprojet.rendu;
 
 import android.content.Context;
 

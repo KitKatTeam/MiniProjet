@@ -1,7 +1,7 @@
-package com.example.miniprojet.miniprojet;
+package com.example.miniprojet.miniprojet.activity;
 
 import android.content.Intent;
-import android.os.Parcelable;
+import android.graphics.Typeface;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.util.SparseBooleanArray;
@@ -13,6 +13,7 @@ import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
 
+import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
@@ -22,7 +23,6 @@ import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.ListIterator;
 
 public class ChooseTagActivity extends FragmentActivity {
 
@@ -30,7 +30,6 @@ public class ChooseTagActivity extends FragmentActivity {
     private ListView liste;
     private Button chooseTagButton;
     private ArrayAdapter<TagDto> adapter;
-    private TextView counter;
     List<TagDto> tagList = new ArrayList<>();
 
     @Override
@@ -44,11 +43,11 @@ public class ChooseTagActivity extends FragmentActivity {
         this.connectedUser.setUsername("Michel");
         TextView bienvenuTV = (TextView) findViewById(R.id.bienvenuTextView);
         bienvenuTV.append(this.connectedUser.getUsername());
+        bienvenuTV.setTypeface(null, Typeface.BOLD);
 
         liste = (ListView) findViewById(R.id.listView);
         chooseTagButton = (Button) findViewById(R.id.choose_tag_button);
 
-        counter = (TextView) findViewById(R.id.counter);
 
 
 
@@ -76,7 +75,6 @@ public class ChooseTagActivity extends FragmentActivity {
         liste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                counter.setText("" + liste.getCheckedItemCount());
                 liste.setItemChecked(i, !liste.isItemChecked(i));
             }
 

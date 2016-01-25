@@ -1,13 +1,11 @@
-package com.example.miniprojet.miniprojet;
+package com.example.miniprojet.miniprojet.activity;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Bundle;
-import android.support.v7.app.ActionBarActivity;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -15,18 +13,12 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
-import com.example.miniprojet.miniprojet.api.klicws.TagAPI;
-import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
-import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
+import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
-import com.example.miniprojet.miniprojet.db.pojo.User;
 import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
-
-import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
