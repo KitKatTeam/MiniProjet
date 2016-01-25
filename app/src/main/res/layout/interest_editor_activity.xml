@@ -4,32 +4,44 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.miniprojet.miniprojet.InterestEditorActivity">
+    tools:context="com.example.miniprojet.miniprojet.InterestEditorActivity"
+    android:background="#e5e5e5">
 
 
     <ImageView
-        android:layout_width="166dp"
+        android:layout_width="match_parent"
         android:layout_height="166dp"
         android:id="@+id/imageView"
         android:layout_gravity="center_horizontal|top"
-        android:layout_below="@+id/imageButton2"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentTop="true"
+        android:layout_above="@+id/tagListTextView" />
 
     <EditText
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:inputType="textMultiLine"
         android:ems="10"
+        android:gravity="top"
         android:id="@+id/descriptionTextField"
         android:layout_gravity="center_horizontal|bottom"
         android:layout_below="@+id/descriptionTextView"
         android:layout_alignLeft="@+id/descriptionTextView"
-        android:layout_alignStart="@+id/descriptionTextView" />
+        android:layout_alignStart="@+id/descriptionTextView"
+        android:background="#ffffff"
+        android:layout_alignRight="@+id/finalizeButton"
+        android:layout_alignEnd="@+id/finalizeButton"
+        android:layout_above="@+id/finalizeButton"
+        android:layout_marginBottom="10px" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="350px"
         android:layout_height="wrap_content"
         android:text="Finaliser"
+        android:layout_marginRight="50px"
         android:id="@+id/finalizeButton"
         android:layout_gravity="right|bottom"
         android:layout_alignParentBottom="true"
@@ -55,13 +67,18 @@
 
     <EditText
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_height="80px"
         android:inputType="textMultiLine"
         android:ems="10"
+        android:layout_marginRight="50px"
         android:id="@+id/tagListTextField"
         android:layout_gravity="right|center_vertical"
         android:layout_below="@+id/tagListTextView"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignLeft="@+id/tagListTextView"
+        android:layout_alignStart="@+id/tagListTextView"
+        android:background="#ffffff" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -72,5 +89,6 @@
         android:layout_gravity="left|center_vertical"
         android:layout_centerVertical="true"
         android:layout_alignLeft="@+id/descriptionTextView"
-        android:layout_alignStart="@+id/descriptionTextView" />
+        android:layout_alignStart="@+id/descriptionTextView"
+        android:textColor="#000000" />
 </RelativeLayout>
