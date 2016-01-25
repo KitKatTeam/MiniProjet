@@ -89,7 +89,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //Intent intent2 = new Intent(this, "android.media.action.IMAGE_CAPTURE");
 
                 //Création du fichier image
-                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+                File photo = new File(Environment.getExternalStorageDirectory(), "Pic.jpg");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photo));
                 imageUri = Uri.fromFile(photo);
@@ -117,7 +117,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (netInfo != null && netInfo.isConnectedOrConnecting()) {
             Log.d("CONNEXION", "CONNEXION");
         }
-
 
 
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
@@ -163,8 +162,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
 
 
-
-
         // Position the map.
 //getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
 
@@ -182,13 +179,16 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
             @Override
             public void onInfoWindowClick(Marker marker) {
                 CustomMarker customMarker = customMarkernRendered.getItemMarkerHashmap().get(marker.getId());
-                Intent intent = new Intent(MapsActivity.this, InterestDisplayerActivity.class);
-                intent.putExtra("interest", customMarker.getInterestDto());
-                intent.putExtra("connectedUser", connectedUser);
-                startActivity(intent);
+                // Le marker de geoloc renvoie null
+                if (customMarker != null) {
+                    Intent intent = new Intent(MapsActivity.this, InterestDisplayerActivity.class);
+                    intent.putExtra("interest", customMarker.getInterestDto());
+                    intent.putExtra("connectedUser", connectedUser);
+                    startActivity(intent);
+
+                }
             }
         });
-
 
 
         this.initInterests(clusterManager);
@@ -198,7 +198,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
         this.interests = this.interestAPI.getAll();
         for (InterestDto interest : interests) {
-            if(interest.containsTagsName(this.tagList)) {
+            if (interest.containsTagsName(this.tagList)) {
                 Float lat = interest.getPositionX();
                 Float lng = interest.getPositionY();
                 String title = interest.getDescription();

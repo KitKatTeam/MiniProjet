@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.miniprojet.miniprojet.InterestDisplayerActivity">
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Description"
+        android:id="@+id/descriptionTVConsultation"
+        android:layout_marginBottom="132dp"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tags"
+        android:id="@+id/tagTVConsultation"
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/bitmapConsultation"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="23dp"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_above="@+id/tagTVConsultation" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/tagListConsultation"
+        android:layout_below="@+id/tagTVConsultation"
+        android:layout_alignLeft="@+id/descriptionTVConsultation"
+        android:layout_alignStart="@+id/descriptionTVConsultation"
+        android:layout_marginTop="27dp"
+        android:layout_alignRight="@+id/descriptionTVConsultation"
+        android:layout_alignEnd="@+id/descriptionTVConsultation" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/descriptionConsultation"
+        android:layout_alignTop="@+id/descriptionTVConsultation"
+        android:layout_marginTop="35dp"
+        android:layout_alignRight="@+id/descriptionTVConsultation"
+        android:layout_alignEnd="@+id/descriptionTVConsultation"
+        android:layout_alignLeft="@+id/descriptionTVConsultation"
+        android:layout_alignStart="@+id/descriptionTVConsultation" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:id="@+id/dateInteret"
+        android:layout_alignTop="@+id/descriptionTVConsultation"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true" />
+</RelativeLayout>
