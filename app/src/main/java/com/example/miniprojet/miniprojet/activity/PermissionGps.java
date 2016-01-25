@@ -22,14 +22,6 @@ public class PermissionGps extends Activity {
                             }
                         }
                 );
-        localBuilder.setNegativeButton("Ne pas l'activer ",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface paramDialogInterface, int paramInt) {
-                        paramDialogInterface.cancel();
-                        PermissionGps.this.finish();
-                    }
-                }
-        );
         localBuilder.create().show();
     }
 
