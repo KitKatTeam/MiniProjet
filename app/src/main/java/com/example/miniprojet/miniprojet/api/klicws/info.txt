@@ -26,3 +26,24 @@
         for(TagDto t : tags){
             Log.d("ZZZZZZ",t.getNom());
         }
+
+
+
+        // cree un interest et tags
+                        InterestAPI interestAPI = InterestAPI.getInstance();
+                        InterestDto interestDto = new InterestDto();
+                        interestDto.setDescription("un super pooint de vue");
+                        interestDto.setPositionX(5675.6F);
+                        interestDto.setPositionY(5675.6F);
+
+                        interestDto = interestAPI.add(interestDto);
+
+                        TagDto tagDto = new TagDto();
+                        tagDto.setNom("recyclage");
+                        tagDto.setType(TypeLocation.AREA);
+                        tagDto.setPositionTopX(145F);
+                        tagDto.setPositionTopY(145F);
+                        tagDto.setPositionBottomX(145F);
+                        tagDto.setPositionBottomY(145F);
+
+                        interestAPI.addTag(interestDto.getId(),tagDto);

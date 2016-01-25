@@ -1,6 +1,8 @@
 package com.example.miniprojet.miniprojet.api.amazon;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.util.Log;
@@ -20,17 +22,30 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectResult;
 import com.amazonaws.services.s3.model.S3Object;
+import com.amazonaws.util.IOUtils;
 import com.example.miniprojet.miniprojet.db.pojo.Comment;
 
 import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Created by loicleger on 21/01/16.
  */
 public class ManageImages  extends AsyncTask<String,Void,Void>{
+    private static final String BUCKET_NAME = "kitkatdevimages";
 
     private File photo;
-    private Context context;
+    private Bitmap bitmap;
+    private String keyName;
+
+    public String getKeyName() {
+        return keyName;
+    }
+
+    public void setKeyName(String keyName) {
+        this.keyName = keyName;
+    }
 
     public File getPhoto() {
         return photo;
@@ -40,26 +55,21 @@ public class ManageImages  extends AsyncTask<String,Void,Void>{
         this.photo = photo;
     }
 
-    public Context getContext() {
-        return context;
+
+    public Bitmap getBitmap() {
+        return bitmap;
     }
 
-    public void setContext(Context context) {
-        this.context = context;
+    public void setBitmap(Bitmap bitmap) {
+        this.bitmap = bitmap;
     }
 
-    private void UploadFile(File photo, Context context)
+    private void uploadFile()
     {
-        String existingBucketName = "kitkatdevimages/";
-        String keyName = "Pic.jpg";
-
         AWSCredentials credential = new BasicAWSCredentials("AKIAJF6BO4GMU6TY7ATA", "kQkj+Nv7RNzW3vTG8zAWOGn5jnDIlXmlJScBZePB");
-
-
-
         AmazonS3 s3Client = new AmazonS3Client(credential);
 
-        PutObjectRequest por =   new PutObjectRequest( "kitkatdevimages",keyName,photo);
+        PutObjectRequest por =   new PutObjectRequest(BUCKET_NAME,keyName,photo);
         PutObjectResult object = s3Client.putObject(por);
 
         Log.d("AMAZONEEE",object.getETag());
@@ -67,23 +77,30 @@ public class ManageImages  extends AsyncTask<String,Void,Void>{
 
     private void downloadFile()
     {
-        String existingBucketName = "kitkatdevimages/";
-        String keyName = "Pic.jpg";
-
         AWSCredentials credential = new BasicAWSCredentials("AKIAJF6BO4GMU6TY7ATA", "kQkj+Nv7RNzW3vTG8zAWOGn5jnDIlXmlJScBZePB");
-
-
 
         AmazonS3 s3Client = new AmazonS3Client(credential);
 
-        GetObjectRequest por =   new GetObjectRequest( "kitkatdevimages",keyName);
+        GetObjectRequest por =   new GetObjectRequest(BUCKET_NAME,keyName);
         S3Object object = s3Client.getObject(por);
-        Log.d("AMAZONEEE",object.getBucketName());
+        //process inputStream
+        try {
+            byte[] photo = IOUtils.toByteArray(object.getObjectContent());
+            bitmap = BitmapFactory.decodeByteArray(photo,0,photo.length);
+        } catch (IOException e) {
+            Log.e("AMAZONEEE",object.getBucketName());
+        }
+        Log.d("AMAZONEEE", String.valueOf(bitmap.getWidth()));
     }
 
     @Override
     protected Void doInBackground(String...params) {
-        this.UploadFile(getPhoto(),getContext());
+        if(params[0] == "Upload") {
+            this.uploadFile();
+        } else {
+            this.downloadFile();
+        }
         return null;
     }
+
 }

@@ -67,17 +67,17 @@ public class InterestAPI extends RestService {
      * @param tag
      * @return
      */
-    public Interest addTag( Long idInterest, TagDto tag) {
+    public InterestDto addTag( Long idInterest, TagDto tag) {
 
         MultiHashMap params = tag.toMap();
         String json = this.getService("interest/"+idInterest+"/addTag",params);
 
-        Interest result = null;
+        InterestDto result = null;
 
         if (!json.equals("")){
             try {
                 ObjectMapper mapper = new ObjectMapper();
-                result = mapper.readValue(json,Interest.class);
+                result = mapper.readValue(json,InterestDto.class);
             } catch (IOException e) {
                 e.printStackTrace();
             }
