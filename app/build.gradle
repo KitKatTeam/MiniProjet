@@ -38,6 +38,7 @@ dependencies {
 
     compile 'com.google.android.gms:play-services:8.4.0'
     compile 'com.google.maps.android:android-maps-utils:0.3'
+
     compile 'commons-collections:commons-collections:3.0'
 
     compile 'com.fasterxml.jackson.core:jackson-core:2.0.6'

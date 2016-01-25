@@ -26,6 +26,7 @@ import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 import com.google.android.gms.appindexing.Action;
 import com.google.android.gms.appindexing.AppIndex;
 import com.google.android.gms.common.api.GoogleApiClient;
+import com.google.maps.android.*;
 
 import java.util.List;
 

@@ -12,34 +12,31 @@ import android.location.LocationManager;
 import android.net.ConnectivityManager;
 import android.net.NetworkInfo;
 import android.net.Uri;
-import android.os.AsyncTask;
+import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
-import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
-import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
-import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
-//import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.File;
 import java.io.IOException;
-import java.io.Serializable;
 import java.util.List;
+
+//import com.google.maps.android.clustering.ClusterManager;
 
 public class MapsActivity extends FragmentActivity implements OnMapReadyCallback {
 
@@ -54,6 +51,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     // Declare a variable for the cluster manager.
     //private ClusterManager<CustomMarker> mClusterManager;
     private ImageView image;
+    private File photo;
     // Declare a variable for the cluster manager.
     UserDto connectedUser;
 
@@ -76,7 +74,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //Intent intent2 = new Intent(this, "android.media.action.IMAGE_CAPTURE");
 
                 //Création du fichier image
-                File photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+                photo = new File(Environment.getDownloadCacheDirectory(),  "Pic.jpg");
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photo));
                 imageUri = Uri.fromFile(photo);
@@ -206,8 +204,14 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     this.image = (ImageView) findViewById(R.id.imageView);
                     try {
 // GEOLOCALISER
-                        bitmap = MediaStore.Images.Media
-                                .getBitmap(cr, selectedImage);
+                        //bitmap = MediaStore.Images.Media
+                        //        .getBitmap(cr, selectedImage);
+                        //this.image.setImageBitmap(bitmap);
+                        ManageImages manageImages = new ManageImages();
+                        manageImages.setPhoto(photo);
+                        manageImages.setKeyName("Pic.jpg");
+                        manageImages.execute("Upload");
+                        this.image.setImageBitmap(manageImages.getBitmap());
                         //Affichage de l'infobulle
                         Toast.makeText(this, selectedImage.toString(),
                                 Toast.LENGTH_LONG).show();
@@ -223,7 +227,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                         intent.putExtra("latitude", this.locationListener.getLocation().getLatitude());
                         intent.putExtra("longitude", this.locationListener.getLocation().getLongitude());
                         startActivity(intent);
-                    } catch (IOException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
