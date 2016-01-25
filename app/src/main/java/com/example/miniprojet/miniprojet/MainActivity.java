@@ -64,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
                 // pass or not
                 if (user != null) {
-                    Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+                    Intent intent = new Intent(MainActivity.this, ChooseTagActivity.class);
                     intent.putExtra("connectedUser", user);
                     startActivity(intent);
                 } else {

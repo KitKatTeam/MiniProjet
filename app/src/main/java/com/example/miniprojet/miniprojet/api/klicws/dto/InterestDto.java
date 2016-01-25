@@ -6,6 +6,8 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import org.apache.commons.collections.MultiHashMap;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -107,4 +109,14 @@ public class InterestDto implements Serializable {
     public void setTags(List<TagDto> tags) {
         this.tags = tags;
     }
+
+    public boolean containsTagsName(List<TagDto> tagsName) {
+        List<String> tagsNameComparable = new ArrayList<String>();
+        for (TagDto tag :
+                tagsName) {
+            tagsNameComparable.add(tag.getNom());
+        }
+        return !Collections.disjoint(this.tags, tagsName);
+    }
+
 }
