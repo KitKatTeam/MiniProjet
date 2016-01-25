@@ -23,6 +23,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.miniprojet.miniprojet.activity.PermissionGps;
 import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
@@ -74,7 +75,12 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 //Intent intent2 = new Intent(this, "android.media.action.IMAGE_CAPTURE");
 
                 //Création du fichier image
-                photo = new File(Environment.getDownloadCacheDirectory(),  "Pic.jpg");
+                if(Environment.isExternalStorageEmulated()){
+                    photo = new File(Environment.getExternalStorageDirectory(),  "Pic.jpg");
+                } else {
+                    photo = new File("/mnt/emmc/",  "Pic.jpg");
+                }
+
                 intent.putExtra(MediaStore.EXTRA_OUTPUT,
                         Uri.fromFile(photo));
                 imageUri = Uri.fromFile(photo);
@@ -93,7 +99,15 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 //                .findFragmentById(R.id.map);
 //        mapFragment2.getMapAsync(this);
         this.locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        /** Test si le gps est activé ou non */
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            /** on lance notre activity (qui est une dialog) */
+            Intent localIntent = new Intent(this, PermissionGps.class);
+            localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(localIntent);
+        }
         List<String> enabledProv = locationManager.getProviders(true);
+
         List<String> allProv = locationManager.getAllProviders();
 
         ConnectivityManager cm =
