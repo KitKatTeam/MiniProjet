@@ -1,5 +1,6 @@
 package com.example.miniprojet.miniprojet;
 
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
@@ -14,6 +15,8 @@ import android.widget.Toast;
 
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
+import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
+import com.example.miniprojet.miniprojet.api.klicws.dto.TypeLocation;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 
 import java.io.IOException;
@@ -36,6 +39,7 @@ public class InterestEditorActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.interest_editor_activity);
         ImageView image = (ImageView) findViewById(R.id.imageView);
+        image.setScaleType(ImageView.ScaleType.FIT_XY);
 
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
 
@@ -68,17 +72,33 @@ public class InterestEditorActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String[] tagList = tagListTextField.getText().toString().trim().split(",");
                 String description = descriptionTextField.getText().toString();
-                // Ajouter un signe (#, ...) à chaque tag
 
-                // TODO : créer les tag et tout
-                // TODO : rediriger sur la MapsActivity en précisant :
-                // intent.putExtra("connectedUser", user);
-                // TODO : recharger tous les tags, descirptions ? depuis le server
-                // TODO : prévoir un champs en bdd pour le chemin de l'image sur le telephone si le download de Loic marche pas
+                String tagsList = tagListTextField.getText().toString();
+
+                String descriptionInterest = descriptionTextField.getText().toString();
+
+                InterestAPI interestAPI = InterestAPI.getInstance();
+                InterestDto interestDto = new InterestDto();
+                interestDto.setDescription(descriptionInterest);
+                Double lat = bitmapLocation.getLatitude();
+                interestDto.setPositionX(lat.floatValue());
+                Double lon = bitmapLocation.getLongitude();
+                interestDto.setPositionY(lon.floatValue());
+                interestDto = interestAPI.add(interestDto);
+
+                for (String tag : tagsList.split(",")){
+                    TagDto tagDto = new TagDto();
+                    tagDto.setNom(tag);
+                    tagDto.setType(TypeLocation.AREA);
+                    interestAPI.addTag(interestDto.getId(),tagDto);
+                }
+
+                Intent intent = new Intent(InterestEditorActivity.this, MapsActivity.class);
+                intent.putExtra("connectedUser", connectedUser);
+                startActivity(intent);
+
             }
         });
-//        new InterestDto()
-//        InterestAPI interestAPI = InterestAPI.getInstance();
-//        interestAPI.
+
     }
 }
