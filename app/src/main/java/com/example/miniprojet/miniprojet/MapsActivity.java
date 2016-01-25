@@ -103,7 +103,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
             /** on lance notre activity (qui est une dialog) */
             Intent localIntent = new Intent(this, PermissionGps.class);
-            localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            //localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(localIntent);
         }
         List<String> enabledProv = locationManager.getProviders(true);
@@ -251,5 +251,19 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     public void setLocation(Location location) {
         this.location = location;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        this.locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+        /** Test si le gps est activé ou non */
+        if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
+            /** on lance notre activity (qui est une dialog) */
+            Intent localIntent = new Intent(this, PermissionGps.class);
+            //localIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(localIntent);
+        }
     }
 }
