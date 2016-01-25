@@ -1,26 +1,33 @@
 package com.example.miniprojet.miniprojet;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TypeLocation;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Tales of symphonia on 23/01/2016.
@@ -33,6 +40,7 @@ public class InterestEditorActivity extends AppCompatActivity {
     private Location bitmapLocation;
     private EditText tagListTextField;
     private EditText descriptionTextField;
+    private Uri selectedImage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -43,7 +51,7 @@ public class InterestEditorActivity extends AppCompatActivity {
 
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
 
-        Uri selectedImage = (Uri) getIntent().getExtras().get("imageUri");
+        selectedImage = (Uri) getIntent().getExtras().get("imageUri");
 
         this.bitmapLocation = (Location) getIntent().getParcelableExtra("location");
 
@@ -73,29 +81,76 @@ public class InterestEditorActivity extends AppCompatActivity {
                 String[] tagList = tagListTextField.getText().toString().trim().split(",");
                 String description = descriptionTextField.getText().toString();
 
+
+
+                // get values
                 String tagsList = tagListTextField.getText().toString();
-
                 String descriptionInterest = descriptionTextField.getText().toString();
-
-                InterestAPI interestAPI = InterestAPI.getInstance();
-                InterestDto interestDto = new InterestDto();
-                interestDto.setDescription(descriptionInterest);
                 Double lat = bitmapLocation.getLatitude();
-                interestDto.setPositionX(lat.floatValue());
                 Double lon = bitmapLocation.getLongitude();
-                interestDto.setPositionY(lon.floatValue());
-                interestDto = interestAPI.add(interestDto);
 
-                for (String tag : tagsList.split(",")){
-                    TagDto tagDto = new TagDto();
-                    tagDto.setNom(tag);
-                    tagDto.setType(TypeLocation.AREA);
-                    interestAPI.addTag(interestDto.getId(),tagDto);
+                // save image
+                String tagsKeys = "";
+                for (String tag : tagsList.split(",")) {
+                    tagsKeys += tag;
+                }
+                Integer rnfKey = 0 + (int)(Math.random() * ((1000 - 0) + 1));
+                String imageKey = tagsKeys+rnfKey.toString()+lat.toString();
+
+                ManageImages manageImages = new ManageImages();
+
+                File sdcard = Environment.getExternalStorageDirectory();
+                File file = new File(sdcard,selectedImage.toString());
+                manageImages.setPhoto(file);
+                manageImages.setKeyName(imageKey);
+                manageImages.execute();
+                Boolean error = false;
+                try {
+
+                    manageImages.get();
+
+                    // save interest
+                    InterestAPI interestAPI = InterestAPI.getInstance();
+                    InterestDto interestDto = new InterestDto();
+                    interestDto.setDescription(descriptionInterest);
+                    interestDto.setUserId(connectedUser.getId());
+                    interestDto.setPositionX(lat.floatValue());
+                    interestDto.setPositionY(lon.floatValue());
+                    interestDto.setImage(imageKey);
+                    interestDto = interestAPI.add(interestDto);
+
+                    for (String tag : tagsList.split(",")){
+                        TagDto tagDto = new TagDto();
+                        tagDto.setNom(tag);
+                        tagDto.setType(TypeLocation.AREA);
+                        interestAPI.addTag(interestDto.getId(),tagDto);
+                    }
+
+                    Intent intent = new Intent(InterestEditorActivity.this, MapsActivity.class);
+                    intent.putExtra("connectedUser", connectedUser);
+                    startActivity(intent);
+
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                    error = true;
+                } catch (ExecutionException e) {
+                    e.printStackTrace();
+                    error = true;
                 }
 
-                Intent intent = new Intent(InterestEditorActivity.this, MapsActivity.class);
-                intent.putExtra("connectedUser", connectedUser);
-                startActivity(intent);
+                if (error){
+                    AlertDialog alertDialog = new AlertDialog.Builder(InterestEditorActivity.this).create();
+                    alertDialog.setTitle("Impossible d'uploader l'image!");
+                    alertDialog.setMessage("ER_UPLOAD");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+                                }
+                            });
+                    alertDialog.show();
+                }
 
             }
         });

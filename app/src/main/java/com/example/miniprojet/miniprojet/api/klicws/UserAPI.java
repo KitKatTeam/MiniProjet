@@ -68,13 +68,13 @@ public class UserAPI extends RestService {
      * @param password : password of the user
      * @return user
      */
-    public UserDto subscribe(String name,String email, String password){
+    public UserDto subscribe(String username,String email, String password){
 
         MultiHashMap params = new MultiHashMap();
-        params.put("name",email);
+        params.put("username",username);
         params.put("email",email);
         params.put("password",password);
-        String json = this.getService("subscribe",params);
+        String json = this.getService("subscription",params);
 
         UserDto userDTO = null;
 

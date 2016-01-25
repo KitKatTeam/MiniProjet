@@ -16,7 +16,7 @@ import java.util.List;
 @JsonIgnoreProperties(ignoreUnknown = true)
 public class InterestDto implements Serializable {
 
-    private long id;
+    private Long id;
 
     private Date date;
 
@@ -30,6 +30,28 @@ public class InterestDto implements Serializable {
 
     private List<TagDto> tags;
 
+    private String image;
+
+    private Long userId;
+
+
+    public Long getUserId() {
+        return userId;
+    }
+
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
+
+
+
+    public String getImage() {
+        return image;
+    }
+
+    public void setImage(String image) {
+        this.image = image;
+    }
 
     public MultiHashMap toMap(){
 
@@ -48,15 +70,22 @@ public class InterestDto implements Serializable {
         if (this.getPositionY() !=null){
             params.put("positionY",this.getPositionY().toString());
         }
+        if (this.getPositionY() !=null){
+            params.put("image",this.getImage());
+        }
+        if (this.getPositionY() !=null){
+            params.put("userId",this.getUserId());
+        }
+
 
         return params;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
