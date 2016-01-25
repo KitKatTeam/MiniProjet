@@ -28,7 +28,8 @@
         android:layout_alignEnd="@+id/motDePasseTextField"
         android:layout_marginTop="30dp"
         android:layout_alignLeft="@+id/motDePasseTextField"
-        android:layout_alignStart="@+id/motDePasseTextField" />
+        android:layout_alignStart="@+id/motDePasseTextField"
+        android:text="test@gmail.com" />
 
 
 
@@ -44,7 +45,8 @@
         android:background="@android:color/white"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="30dp" />
+        android:layout_marginBottom="30dp"
+        android:text="test" />
 
     <Button
         android:layout_width="match_parent"

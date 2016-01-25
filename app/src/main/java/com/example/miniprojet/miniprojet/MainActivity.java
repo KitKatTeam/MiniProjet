@@ -11,6 +11,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
@@ -27,6 +28,10 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        EditText pseudoTextField = (EditText) findViewById(R.id.pseudoTextField);
+        pseudoTextField.setText("test@gmail.com", TextView.BufferType.EDITABLE);
+        EditText motDePasseTextField = (EditText) findViewById(R.id.motDePasseTextField);
+        motDePasseTextField.setText("test", TextView.BufferType.EDITABLE);
 
         this.connexionButton = (Button) findViewById(R.id.connexionButton);
         this.connexionButton.setOnClickListener(new View.OnClickListener() {
@@ -90,5 +95,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
     }
 }

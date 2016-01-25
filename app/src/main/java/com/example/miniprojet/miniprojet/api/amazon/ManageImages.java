@@ -53,30 +53,15 @@ public class ManageImages  extends AsyncTask<String,Void,Void>{
         String existingBucketName = "kitkatdevimages/";
         String keyName = "Pic.jpg";
 
-        //String amazonFileUploadLocationOriginal = existingBucketName + "/images/";
         AWSCredentials credential = new BasicAWSCredentials("AKIAJF6BO4GMU6TY7ATA", "kQkj+Nv7RNzW3vTG8zAWOGn5jnDIlXmlJScBZePB");
-        //BasicAWSCredentials credentialProviderChain = new BasicAWSCredentials();
 
-        // Transfer a file to an S3 bucket.
 
 
         AmazonS3 s3Client = new AmazonS3Client(credential);
 
-        //TransferUtility transferUtility = new TransferUtility(s3Client, context);;
-        File stream = null;
-        //Log.d("AMZONE",imageUri.getPath());
-        //stream = new File(imageUri.getPath());
-        /*PutObjectRequest por = new PutObjectRequest(amazonFileUploadLocationOriginal,keyName,stream);
-        // Send the request.
-        Upload upload = manager.upload(por);*/
-        //s3Client.createBucket("kitkatdevimages");
         PutObjectRequest por =   new PutObjectRequest( "kitkatdevimages",keyName,photo);
         PutObjectResult object = s3Client.putObject(por);
-        /*TransferObserver observer = transferUtility.upload(
-                existingBucketName,     *//* The bucket to upload to *//*
-                keyName,    *//* The key for the uploaded object *//*
-                stream        *//* The file where the data to upload exists *//*
-        );*/
+
         Log.d("AMAZONEEE",object.getETag());
     }
 
@@ -85,30 +70,14 @@ public class ManageImages  extends AsyncTask<String,Void,Void>{
         String existingBucketName = "kitkatdevimages/";
         String keyName = "Pic.jpg";
 
-        //String amazonFileUploadLocationOriginal = existingBucketName + "/images/";
         AWSCredentials credential = new BasicAWSCredentials("AKIAJF6BO4GMU6TY7ATA", "kQkj+Nv7RNzW3vTG8zAWOGn5jnDIlXmlJScBZePB");
-        //BasicAWSCredentials credentialProviderChain = new BasicAWSCredentials();
 
-        // Transfer a file to an S3 bucket.
 
 
         AmazonS3 s3Client = new AmazonS3Client(credential);
 
-        //TransferUtility transferUtility = new TransferUtility(s3Client, context);;
-        File stream = null;
-        //Log.d("AMZONE",imageUri.getPath());
-        //stream = new File(imageUri.getPath());
-        /*PutObjectRequest por = new PutObjectRequest(amazonFileUploadLocationOriginal,keyName,stream);
-        // Send the request.
-        Upload upload = manager.upload(por);*/
-        //s3Client.createBucket("kitkatdevimages");
         GetObjectRequest por =   new GetObjectRequest( "kitkatdevimages",keyName);
         S3Object object = s3Client.getObject(por);
-        /*TransferObserver observer = transferUtility.upload(
-                existingBucketName,     *//* The bucket to upload to *//*
-                keyName,    *//* The key for the uploaded object *//*
-                stream        *//* The file where the data to upload exists *//*
-        );*/
         Log.d("AMAZONEEE",object.getBucketName());
     }
 
