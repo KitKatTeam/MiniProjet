@@ -76,21 +76,6 @@ public class InterestDisplayerActivity extends AppCompatActivity {
 
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
 
-
-
-        ManageImages manageImages = new ManageImages();
-        manageImages.setKeyName(this.interest.getImage());
-        manageImages.execute("Download");
-        try {
-            manageImages.get();
-            this.bitmapConsultable.setImageBitmap(manageImages.getBitmap());
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (ExecutionException e) {
-            e.printStackTrace();
-        }
-
-
         String tagListText = "";
         for (TagDto tag :
                 this.interest.getTags()) {
