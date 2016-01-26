@@ -45,7 +45,6 @@ public class InterestDisplayerActivity extends AppCompatActivity {
 
         this.interest = (InterestDto) getIntent().getSerializableExtra("interest");
 
-        // TODO : download image
 
         this.bitmapConsultable = (ImageView) findViewById(R.id.bitmapConsultable);
         Bitmap bitmap = null;
@@ -77,6 +76,19 @@ public class InterestDisplayerActivity extends AppCompatActivity {
 
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
 
+
+
+        ManageImages manageImages = new ManageImages();
+        manageImages.setKeyName(this.interest.getImage());
+        manageImages.execute("Download");
+        try {
+            manageImages.get();
+            this.bitmapConsultable.setImageBitmap(manageImages.getBitmap());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
 
 
         String tagListText = "";
