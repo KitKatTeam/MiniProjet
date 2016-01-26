@@ -87,12 +87,8 @@ public class PhotoEditorActivity extends AppCompatActivity {
             this.coefMultHeight = (float) mutableBitmap.getHeight() / (float) heightScreen;
 
             this.image.setImageBitmap(mutableBitmap);
-            //Affichage de l'infobulle
-            Toast.makeText(this, selectedImage.toString(),
-                    Toast.LENGTH_LONG).show();
 
             // Envoi de la photo à l'éditeur
-
             onTouchListener = new View.OnTouchListener() {
                 @Override
                 public boolean onTouch(View view, MotionEvent motionEvent) {
@@ -100,19 +96,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
                     float effectiveYPosEvent = motionEvent.getY() * coefMultHeight;
                     if (effectiveXPosEvent >= 0 && effectiveYPosEvent >= 0 && effectiveXPosEvent <= mutableBitmap.getWidth() && effectiveYPosEvent <= mutableBitmap.getHeight() && (motionEvent.getAction() == MotionEvent.ACTION_DOWN || motionEvent.getAction() == MotionEvent.ACTION_MOVE)) {
 
-//                        for (int i = 0; i < mutableBitmap.getWidth(); i++) {
-//                            for (int j = 0; j < mutableBitmap.getHeight(); j++) {
                         setGroupPixel(mutableBitmap, effectiveXPosEvent , effectiveYPosEvent, Color.BLUE);
-
-//                            }
-//                        }
-//                        textView.setText("(" + (motionEvent.getX() - 180) + "," + motionEvent.getY() + ")");
-//                        Bitmap tmp = ((BitmapDrawable) image.getDrawable()).getBitmap();
-//                        textView.append("\n AVANT SET" + mutableBitmap.getPixel((int) motionEvent.getX() - 180, (int)motionEvent.getY()));
-//                        mutableBitmap.setPixel((int) motionEvent.getX() - 180, (int) motionEvent.getY(), Color.BLACK);
-//                        textView.append("\n APRES SET" + mutableBitmap.getPixel((int) motionEvent.getX() - 180, (int)motionEvent.getY()));
-//                        image.invalidate();
-//                        image.setImageBitmap(null);
 
                         image.invalidate();
                     }
@@ -138,6 +122,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
             public void onClick(View view) {
                 image.setImageBitmap(originalBitmap);
                 mutableBitmap = originalBitmap.copy(originalBitmap.getConfig(), true);
+                image.setImageBitmap(mutableBitmap);
                 image.setOnTouchListener(onTouchListener);
             }
         });
@@ -181,17 +166,14 @@ public class PhotoEditorActivity extends AppCompatActivity {
 
             }
         });
-        Toast.makeText(this, image.getWidth() + " VS " + mutableBitmap.getWidth() + " et " + image.getHeight() + " VS " + mutableBitmap.getHeight(), Toast.LENGTH_SHORT)
-                .show();
-        Log.e("TAILLEIMAGE", image.getWidth() + " VS " + mutableBitmap.getWidth() + " et " + image.getHeight() + " VS " + mutableBitmap.getHeight());
+
     }
 
     private void setGroupPixel(Bitmap mutableBitmap, float i, float j, int blue) {
-        for (int x = (int) i - 5; x < i + 5; x++) {
-            for (int y = (int) j - 5; y < j + 5; y++) {
+        for (int x = (int) i - 34; x < i + 34; x++) {
+            for (int y = (int) j - 34; y < j + 34; y++) {
                 if (x >= 0 && y >= 0) {
                     mutableBitmap.setPixel(x, y, blue);
-                    Log.d("PHOTOEDITORACTIVITY", "(" + i + "," + j + ")");
 
                 }
             }
