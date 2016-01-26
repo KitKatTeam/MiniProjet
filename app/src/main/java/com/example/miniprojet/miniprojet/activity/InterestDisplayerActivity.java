@@ -14,11 +14,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miniprojet.miniprojet.R;
+import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 
 import java.io.IOException;
+import java.util.concurrent.ExecutionException;
 
 /**
  * Created by Tales of symphonia on 25/01/2016.
@@ -37,7 +39,6 @@ public class InterestDisplayerActivity extends AppCompatActivity {
         setContentView(R.layout.interest_consultation_activity);
         ImageView image = (ImageView) findViewById(R.id.imageView);
 
-        // TODO : download image
 
         this.bitmapConsultable = (ImageView) findViewById(R.id.bitmapConsultation);
         this.tagListConsultation = (TextView) findViewById(R.id.tagListConsultation);
@@ -47,6 +48,19 @@ public class InterestDisplayerActivity extends AppCompatActivity {
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
 
         this.interest = (InterestDto) getIntent().getSerializableExtra("interest");
+
+        ManageImages manageImages = new ManageImages();
+        manageImages.setKeyName(this.interest.getImage());
+        manageImages.execute("Download");
+        try {
+            manageImages.get();
+            this.bitmapConsultable.setImageBitmap(manageImages.getBitmap());
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        }
+
 
         String tagListText = "";
         for (TagDto tag :
