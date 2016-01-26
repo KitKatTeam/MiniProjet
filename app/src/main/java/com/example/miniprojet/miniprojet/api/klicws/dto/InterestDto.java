@@ -59,9 +59,8 @@ public class InterestDto implements Serializable {
 
         MultiHashMap params = new MultiHashMap();
 
-        if (this.getId() !=  0) {
-            Long id = this.getId();
-            params.put("id",id.toString());
+        if (this.getId() !=  null) {
+            params.put("id",this.getId().toString());
         }
         if (this.getDescription() !=null) {
             params.put("description", this.getDescription());
@@ -75,8 +74,8 @@ public class InterestDto implements Serializable {
         if (this.getPositionY() !=null){
             params.put("image",this.getImage());
         }
-        if (this.getPositionY() !=null){
-            params.put("userId",this.getUserId());
+        if (this.getUserId() !=null){
+            params.put("userId",this.getUserId().toString());
         }
 
 
