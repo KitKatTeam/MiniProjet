@@ -6,6 +6,8 @@ import android.content.Intent;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.widget.Button;
+import android.widget.TextView;
 
 import com.example.miniprojet.miniprojet.MainActivity;
 import com.example.miniprojet.miniprojet.R;
@@ -26,9 +28,22 @@ public class LoadActivity extends AppCompatActivity {
 
                 Integer tryCount = 0;
                 Boolean isConnected = false;
-                while (!isConnected && tryCount <= 3){
+
+                TextView loadingText = (TextView) findViewById(R.id.loadingText);
+                String state = "";
+                while (!isConnected && tryCount <= 8){
                     isConnected = klicAPI.init();
                     tryCount++;
+                    if (tryCount % 3 == 1){
+                        state = ".";
+                    }
+                    if (tryCount % 3 == 2){
+                        state = "..";
+                    }
+                    if (tryCount % 3 == 0){
+                        state = "...";
+                    }
+                    loadingText.setText("Connexion à l'API"+state);
                 }
 
                 if (!isConnected){

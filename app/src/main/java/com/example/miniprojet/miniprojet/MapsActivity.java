@@ -21,11 +21,13 @@ import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miniprojet.miniprojet.activity.PermissionGps;
 import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
+import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.google.android.gms.maps.GoogleMap;
@@ -66,6 +68,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
+
+        TextView userNameBar = (TextView) findViewById(R.id.userNameBar);
+        userNameBar.setText("user: "+connectedUser.getEmail());
         this.bouton = (ImageButton) findViewById(R.id.imageButton);
         this.bouton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -119,7 +125,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
 
 
-        this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
+
 
     }
 
