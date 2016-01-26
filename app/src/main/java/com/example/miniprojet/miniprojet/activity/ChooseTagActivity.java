@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Typeface;
 import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
 import android.view.Menu;
 import android.view.View;
@@ -24,7 +25,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ChooseTagActivity extends FragmentActivity {
+public class ChooseTagActivity extends AppCompatActivity {
 
     UserDto connectedUser;
     private ListView liste;
@@ -39,10 +40,8 @@ public class ChooseTagActivity extends FragmentActivity {
         setContentView(R.layout.choose_tag_activity_layout);
 
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
-// TODO à supprimer après
-        this.connectedUser.setUsername("Michel");
+
         TextView bienvenuTV = (TextView) findViewById(R.id.bienvenuTextView);
-        bienvenuTV.append(this.connectedUser.getUsername());
         bienvenuTV.setTypeface(null, Typeface.BOLD);
 
         liste = (ListView) findViewById(R.id.listView);

@@ -4,10 +4,11 @@
     android:orientation="vertical" android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".activity.ChooseTagActivity"
-    android:background="@drawable/fondecran0">
+    >
 
     <ListView
         android:layout_width="205dp"
+        android:layout_marginTop="100px"
         android:layout_height="wrap_content"
         android:id="@+id/listView"
         android:layout_gravity="center" />
@@ -22,25 +23,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenue, "
+        android:text="Choisissez les tags à afficher"
+        android:textSize="30dp"
+        android:layout_marginTop="10px"
         android:id="@+id/bienvenuTextView"
         android:layout_gravity="center_horizontal|top" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="0"
-        android:id="@+id/counter"
-        android:layout_gravity="right|top" />
+
 
     <ImageView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/imageView"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="31dp"
         android:background="@drawable/klic"
-        android:layout_marginBottom="50dp"
-        android:layout_margin="10dp"
-        android:layout_gravity="right|top" />
+        android:layout_marginTop="80px"
+        android:layout_gravity="right|top"
+    />
 </FrameLayout>

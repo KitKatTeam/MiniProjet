@@ -27,6 +27,7 @@ import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
 
@@ -113,7 +114,7 @@ public class InterestEditorActivity extends AppCompatActivity {
                 manageImages.setPhoto(file);
                 manageImages.setKeyName(imageKey);
                 manageImages.execute("Upload");
-                Boolean error = false;
+                Boolean error = true;
                 try {
 
                     manageImages.get();
@@ -135,16 +136,20 @@ public class InterestEditorActivity extends AppCompatActivity {
                         interestAPI.addTag(interestDto.getId(),tagDto);
                     }
 
+                    error = false;
+
                     Intent intent = new Intent(InterestEditorActivity.this, MapsActivity.class);
                     intent.putExtra("connectedUser", connectedUser);
+                    List<TagDto> listT = (List<TagDto>) getIntent().getSerializableExtra("tagList");
+                    intent.putExtra("tagList", (Serializable) listT);
                     startActivity(intent);
 
                 } catch (InterruptedException e) {
                     e.printStackTrace();
-                    error = true;
+
                 } catch (ExecutionException e) {
                     e.printStackTrace();
-                    error = true;
+
                 }
 
                 if (error){
