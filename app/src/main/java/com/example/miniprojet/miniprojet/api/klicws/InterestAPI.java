@@ -26,10 +26,13 @@ public class InterestAPI extends RestService {
     /**
      * Singleton
      */
-    private static InterestAPI instance = new InterestAPI();
+    private static InterestAPI instance = null;
     private InterestAPI(){}
     public static InterestAPI getInstance(){
-        instance.setSource("http://klic-dev.herokuapp.com/");
+        if(instance == null) {
+            instance = new InterestAPI();
+            instance.setSource("http://klic-dev.herokuapp.com/");
+        }
         return instance;
     }
 

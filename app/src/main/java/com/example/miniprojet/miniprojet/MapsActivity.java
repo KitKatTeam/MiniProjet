@@ -218,14 +218,6 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                     this.image = (ImageView) findViewById(R.id.imageView);
                     try {
 // GEOLOCALISER
-                        //bitmap = MediaStore.Images.Media
-                        //        .getBitmap(cr, selectedImage);
-                        //this.image.setImageBitmap(bitmap);
-                        ManageImages manageImages = new ManageImages();
-                        manageImages.setPhoto(photo);
-                        manageImages.setKeyName("Pic.jpg");
-                        manageImages.execute("Upload");
-                        this.image.setImageBitmap(manageImages.getBitmap());
                         //Affichage de l'infobulle
                         Toast.makeText(this, selectedImage.toString(),
                                 Toast.LENGTH_LONG).show();

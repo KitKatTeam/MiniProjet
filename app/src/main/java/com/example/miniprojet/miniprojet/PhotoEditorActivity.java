@@ -169,6 +169,7 @@ public class PhotoEditorActivity extends AppCompatActivity {
                     intent.putExtra("imageUri", newUriFile);
                     intent.putExtra("connectedUser", connectedUser);
                     intent.putExtra("location", bitmapLocation);
+                    intent.putExtra("title", title);
                     startActivity(intent);
                 } catch (FileNotFoundException e) {
                     e.printStackTrace();

@@ -41,6 +41,7 @@ public class InterestEditorActivity extends AppCompatActivity {
     private EditText tagListTextField;
     private EditText descriptionTextField;
     private Uri selectedImage;
+    private String title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +53,8 @@ public class InterestEditorActivity extends AppCompatActivity {
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
 
         selectedImage = (Uri) getIntent().getExtras().get("imageUri");
+
+        title = (String) getIntent().getExtras().get("title");
 
         this.bitmapLocation = (Location) getIntent().getParcelableExtra("location");
 
@@ -98,12 +101,17 @@ public class InterestEditorActivity extends AppCompatActivity {
                 String imageKey = tagsKeys+rnfKey.toString()+lat.toString();
 
                 ManageImages manageImages = new ManageImages();
+                //Création du fichier image
+                File file;
+                if(Environment.isExternalStorageEmulated()){
+                    file = new File(Environment.getExternalStorageDirectory(), title);
+                } else {
+                    file = new File("/mnt/emmc/",  title);
+                }
 
-                File sdcard = Environment.getExternalStorageDirectory();
-                File file = new File(sdcard,selectedImage.toString());
                 manageImages.setPhoto(file);
                 manageImages.setKeyName(imageKey);
-                manageImages.execute();
+                manageImages.execute("Upload");
                 Boolean error = false;
                 try {
 
