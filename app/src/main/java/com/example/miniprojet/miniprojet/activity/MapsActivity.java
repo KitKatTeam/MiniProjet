@@ -53,6 +53,7 @@ import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 //import com.google.maps.android.clustering.ClusterManager;
@@ -220,7 +221,7 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     }
 
     private void initInterests(ClusterManager<CustomMarker> cM) {
-
+        /* ta version
         this.interests = this.interestAPI.getAll();
         for (InterestDto interest : interests) {
             if (interest.containsTagsName(this.tagList)) {
@@ -232,6 +233,23 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
                 cM.addItem(new CustomMarker(lat, lng, title, interest));
 
             }
+
+        }
+        */
+        // ma version
+        List<String> tagsListString = new ArrayList<String>();
+        for(TagDto tag : this.tagList){
+            tagsListString.add(tag.getNom());
+        }
+        this.interests = this.interestAPI.findByTags(tagsListString);
+        for (InterestDto interest : interests) {
+
+                Float lat = interest.getPositionX();
+                Float lng = interest.getPositionY();
+                String title = interest.getDescription();
+                // mClusterManager.addItem(new CustomMarker(lat, lng, title));
+                //this.map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
+                cM.addItem(new CustomMarker(lat, lng, title, interest));
 
         }
     }
