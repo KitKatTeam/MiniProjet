@@ -1,4 +1,4 @@
-package com.example.miniprojet.miniprojet;
+package com.example.miniprojet.miniprojet.activity;
 
 import android.content.ContentResolver;
 import android.content.Intent;
@@ -9,7 +9,6 @@ import android.location.Location;
 import android.net.Uri;
 import android.os.Bundle;
 import android.os.Environment;
-import android.os.Parcelable;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -21,7 +20,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
+import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 
 import java.io.File;

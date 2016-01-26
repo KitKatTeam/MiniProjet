@@ -128,4 +128,24 @@ public class TagDto implements Serializable  {
         this.positionBottomY = positionBottomY;
     }
 
+	@Override
+	public String toString() {
+		return this.getNom();
+	}
+
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (!(o instanceof TagDto)) return false;
+
+		TagDto tagDto = (TagDto) o;
+
+		return nom.equals(tagDto.nom);
+
+	}
+
+	@Override
+	public int hashCode() {
+		return nom.hashCode();
+	}
 }

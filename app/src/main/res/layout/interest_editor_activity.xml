@@ -4,9 +4,8 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.example.miniprojet.miniprojet.InterestEditorActivity"
+    tools:context=".activity.InterestEditorActivity"
     android:background="#e5e5e5">
-
 
     <ImageView
         android:layout_width="match_parent"

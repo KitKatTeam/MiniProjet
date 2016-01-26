@@ -9,7 +9,6 @@ import android.os.Bundle;
 import android.widget.Button;
 import android.widget.TextView;
 
-import com.example.miniprojet.miniprojet.MainActivity;
 import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.klicws.KlicAPI;
 
