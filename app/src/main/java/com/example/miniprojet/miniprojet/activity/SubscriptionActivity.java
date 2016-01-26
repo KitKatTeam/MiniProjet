@@ -9,7 +9,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 
-import com.example.miniprojet.miniprojet.MainActivity;
+import com.example.miniprojet.miniprojet.activity.MainActivity;
 import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;

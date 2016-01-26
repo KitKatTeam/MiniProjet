@@ -1,4 +1,4 @@
-package com.example.miniprojet.miniprojet;
+package com.example.miniprojet.miniprojet.activity;
 
 import android.Manifest;
 import android.app.Activity;
@@ -18,19 +18,37 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.miniprojet.miniprojet.activity.PermissionGps;
 import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
+import android.widget.ListView;
+import android.widget.Toast;
+
+import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
+import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
+import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
+import com.example.miniprojet.miniprojet.geolocalisation.MainLocationListener;
+import com.example.miniprojet.miniprojet.rendu.CustomMarker;
+import com.example.miniprojet.miniprojet.rendu.CustomMarkernRendered;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.Marker;
+//import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.File;
@@ -55,6 +73,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
     private File photo;
     // Declare a variable for the cluster manager.
     UserDto connectedUser;
+    private ListView liste;
+    private List<TagDto> tagList;
+    private ClusterManager<CustomMarker> clusterManager;
+    private CustomMarkernRendered customMarkernRendered;
 
 
     @Override
@@ -66,6 +88,10 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_maps);
 
+        this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
+
+        TextView userNameBar = (TextView) findViewById(R.id.userNameBar);
+        userNameBar.setText("user: "+connectedUser.getEmail());
         this.bouton = (ImageButton) findViewById(R.id.imageButton);
         this.bouton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -118,8 +144,8 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         }
 
 
-
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
+        this.tagList = (List<TagDto>) getIntent().getSerializableExtra("tagList");
 
     }
 
@@ -161,38 +187,51 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
 
 
-
-
         // Position the map.
 //getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
 
         // Initialize the manager with the context and the map.
         // (Activity extends context, so we can pass 'this' in the constructor.)
-         ClusterManager<CustomMarker> cM;
-        cM = new ClusterManager<CustomMarker>(this, this.map);
-        cM.setRenderer(new CustomMarkernRendered(getApplicationContext(), getMap(), cM));
+        clusterManager = new ClusterManager<CustomMarker>(this, this.map);
+        customMarkernRendered = new CustomMarkernRendered(getApplicationContext(), getMap(), clusterManager);
+        clusterManager.setRenderer(customMarkernRendered);
 
         // Point the map's listeners at the listeners implemented by the cluster
         // manager.
-        this.map.setOnCameraChangeListener(cM);
-        this.map.setOnMarkerClickListener(cM);
+        this.map.setOnCameraChangeListener(clusterManager);
+        this.map.setOnMarkerClickListener(clusterManager);
+        this.map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+                CustomMarker customMarker = customMarkernRendered.getItemMarkerHashmap().get(marker.getId());
+                // Le marker de geoloc renvoie null
+                if (customMarker != null) {
+                    Intent intent = new Intent(MapsActivity.this, InterestDisplayerActivity.class);
+                    intent.putExtra("interest", customMarker.getInterestDto());
+                    intent.putExtra("connectedUser", connectedUser);
+                    startActivity(intent);
+
+                }
+            }
+        });
 
 
-
-
-        this.initInterests(cM);
+        this.initInterests(clusterManager);
     }
 
     private void initInterests(ClusterManager<CustomMarker> cM) {
 
         this.interests = this.interestAPI.getAll();
         for (InterestDto interest : interests) {
-            Float lat = interest.getPositionX();
-            Float lng = interest.getPositionY();
-            String title = interest.getDescription();
-           // mClusterManager.addItem(new CustomMarker(lat, lng, title));
-            //this.map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
-            cM.addItem(new CustomMarker(lat, lng, title));
+            if (interest.containsTagsName(this.tagList)) {
+                Float lat = interest.getPositionX();
+                Float lng = interest.getPositionY();
+                String title = interest.getDescription();
+                // mClusterManager.addItem(new CustomMarker(lat, lng, title));
+                //this.map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
+                cM.addItem(new CustomMarker(lat, lng, title, interest));
+
+            }
 
         }
     }
