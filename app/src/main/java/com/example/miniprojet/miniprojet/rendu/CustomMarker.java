@@ -8,7 +8,8 @@ import com.google.maps.android.clustering.ClusterItem;
 //import com.google.maps.android.clustering.ClusterItem;
 
 /**
- * Created by Tales of symphonia on 22/01/2016.
+ * Permet de customiser un marqueur (titres, ...)
+ * Created by Julien on 22/01/2016.
  */
 public class CustomMarker implements ClusterItem {
 
@@ -24,7 +25,6 @@ public class CustomMarker implements ClusterItem {
 
     }
 
-    /*@Override*/
     public LatLng getPosition() {
         return this.position;
     }

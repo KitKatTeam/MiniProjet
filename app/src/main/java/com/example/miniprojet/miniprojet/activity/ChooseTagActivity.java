@@ -25,6 +25,7 @@ import java.util.List;
 
 /**
  * Cette activité permet de filtrer les tag qui seront à afficher sur la carte de l'activité suivante
+ *  * Created by Julien on 25/01/2016.
  */
 public class ChooseTagActivity extends AppCompatActivity {
 

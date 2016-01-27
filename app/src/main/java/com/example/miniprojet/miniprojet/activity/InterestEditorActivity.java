@@ -31,7 +31,8 @@ import java.util.List;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by Tales of symphonia on 23/01/2016.
+ * Permet de créer un point d'intérêt
+ * Created by Julien on 23/01/2016.
  */
 public class InterestEditorActivity extends AppCompatActivity {
 
@@ -93,8 +94,8 @@ public class InterestEditorActivity extends AppCompatActivity {
 
                 // save image
                 String tagsKeys = "";
-                for (String tag : tagsList.trim().split(",")) {
-                    tagsKeys += tag;
+                for (String tag : tagsList.split(",")) {
+                    tag = tag.trim();
                 }
                 Integer rnfKey = 0 + (int)(Math.random() * ((1000 - 0) + 1));
                 String imageKey = tagsKeys+rnfKey.toString()+lat.toString();
@@ -126,9 +127,9 @@ public class InterestEditorActivity extends AppCompatActivity {
                     interestDto.setImage(imageKey);
                     interestDto = interestAPI.add(interestDto);
 
-                    for (String tag : tagsList.trim().split(",")){
+                    for (String tag : tagsList.split(",")){
                         TagDto tagDto = new TagDto();
-                        tagDto.setNom(tag);
+                        tagDto.setNom(tag.trim());
                         tagDto.setType(TypeLocation.AREA);
                         interestAPI.addTag(interestDto.getId(),tagDto);
                     }

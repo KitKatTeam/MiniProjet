@@ -31,7 +31,8 @@ import java.io.OutputStream;
 import java.util.Date;
 
 /**
- * Created by Tales of symphonia on 22/01/2016.
+ *  * Permet de modifier une photo
+ * Created by Julien on 22/01/2016.
  */
 public class PhotoEditorActivity extends AppCompatActivity {
     private ImageView image;

@@ -18,7 +18,8 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
 /**
- * Created by Temporaire on 18/01/2016.
+ * Permet de géolocaliser les positions
+ * Created by Julien on 18/01/2016.
  */
 public class MainLocationListener implements LocationListener {
 
@@ -57,14 +58,14 @@ public class MainLocationListener implements LocationListener {
     public void onProviderEnabled(String provider) {
         if (provider.equals(LocationManager.GPS_PROVIDER) && this.locatioManagerListened.equals(LocationManager.GPS_PROVIDER)) {
             this.locatioManagerListened = LocationManager.GPS_PROVIDER;
-            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 5000, 10, this);
+            locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 60000, 10, this);
         }
         if (provider.equals(LocationManager.NETWORK_PROVIDER.toString()) && this.locatioManagerListened.equals(LocationManager.NETWORK_PROVIDER)) {
             this.locatioManagerListened = LocationManager.NETWORK_PROVIDER;
             if (ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
                 return;
             }
-            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, this);
+            locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 60000, 10, this);
         }
     }
 
@@ -112,13 +113,6 @@ public class MainLocationListener implements LocationListener {
     public void pause() {
         if (this.locatioManagerListened != "") {
             if (ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             locationManager.removeUpdates(this);
@@ -129,13 +123,6 @@ public class MainLocationListener implements LocationListener {
     public void restart() {
         if (this.locatioManagerListened != "") {
             if (ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             locationManager.requestLocationUpdates(this.locatioManagerListened, 5000, 10, this);

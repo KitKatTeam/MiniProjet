@@ -16,7 +16,8 @@ import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import java.util.List;
 
 /**
- * Created by Tales of symphonia on 24/01/2016.
+ * Permet d'afficher la liste de tag sur l'activité ChooseTagActivity
+ * Created by Julien on 24/01/2016.
  */
 public class CustomAdapter extends ArrayAdapter<TagDto> {
     List<TagDto> tags = null;
@@ -24,14 +25,12 @@ public class CustomAdapter extends ArrayAdapter<TagDto> {
 
     public CustomAdapter(Context context, List<TagDto> tags) {
         super(context, R.layout.listview_chooseactivity_row, tags);
-        // TODO Auto-generated constructor stub
         this.context = context;
         this.tags = tags;
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        // TODO Auto-generated method stub
         LayoutInflater inflater = ((Activity) context).getLayoutInflater();
         convertView = inflater.inflate(R.layout.listview_chooseactivity_row, parent, false);
         TextView name = (TextView) convertView.findViewById(R.id.textViewRow);

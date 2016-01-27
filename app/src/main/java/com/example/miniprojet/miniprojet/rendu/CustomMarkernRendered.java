@@ -16,7 +16,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created by Tales of symphonia on 22/01/2016.
+ * Permet d'associer un marqueur à un intérêt
+ * Created by Julien on 22/01/2016.
  */
 public class CustomMarkernRendered extends DefaultClusterRenderer<CustomMarker> {
     private Map<String, CustomMarker> ItemMarkerHashmap;

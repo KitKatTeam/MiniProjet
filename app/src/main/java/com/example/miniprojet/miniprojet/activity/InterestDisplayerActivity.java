@@ -19,7 +19,8 @@ import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutionException;
 
 /**
- * Created by Tales of symphonia on 25/01/2016.
+ * Permet d'afficher le détail d'un intérêt
+ * Created by Julien on 25/01/2016.
  */
 public class InterestDisplayerActivity extends AppCompatActivity {
     private UserDto connectedUser;
@@ -83,7 +84,7 @@ public class InterestDisplayerActivity extends AppCompatActivity {
         if (this.interest.getDate() != null) {
             SimpleDateFormat formatter = new SimpleDateFormat ("dd/MM/yyyy" );
             String dateString = formatter.format(this.interest.getDate());
-            this.dateAndName.setText("posté le " + dateString + " par " + connectedUser.getEmail());
+            this.dateAndName.setText("posté le " + dateString + " par " + connectedUser.getUsername());
 
         }
 

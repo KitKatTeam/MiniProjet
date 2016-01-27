@@ -44,6 +44,11 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Permet d'afficher carte et marqueurs
+ * Created by Julien
+ */
+
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
     private GoogleMap map;
