@@ -34,6 +34,8 @@ import java.io.InputStream;
  */
 public class ManageImages  extends AsyncTask<String,Void,Void>{
     private static final String BUCKET_NAME = "kitkatdevimages";
+    private static final String ACCESS_KEY = "AKIAJF6BO4GMU6TY7ATA";
+    private static final String PRIVATE_KEY = "kQkj+Nv7RNzW3vTG8zAWOGn5jnDIlXmlJScBZePB";
 
     private File photo;
     private Bitmap bitmap;
@@ -66,7 +68,7 @@ public class ManageImages  extends AsyncTask<String,Void,Void>{
 
     private void uploadFile()
     {
-        AWSCredentials credential = new BasicAWSCredentials("AKIAJF6BO4GMU6TY7ATA", "kQkj+Nv7RNzW3vTG8zAWOGn5jnDIlXmlJScBZePB");
+        AWSCredentials credential = new BasicAWSCredentials(ACCESS_KEY, PRIVATE_KEY);
         AmazonS3 s3Client = new AmazonS3Client(credential);
 
         PutObjectRequest por =   new PutObjectRequest(BUCKET_NAME,keyName,photo);
@@ -77,7 +79,7 @@ public class ManageImages  extends AsyncTask<String,Void,Void>{
 
     private void downloadFile()
     {
-        AWSCredentials credential = new BasicAWSCredentials("AKIAJF6BO4GMU6TY7ATA", "kQkj+Nv7RNzW3vTG8zAWOGn5jnDIlXmlJScBZePB");
+        AWSCredentials credential = new BasicAWSCredentials(ACCESS_KEY, PRIVATE_KEY);
 
         AmazonS3 s3Client = new AmazonS3Client(credential);
 
