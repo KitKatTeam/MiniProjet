@@ -23,6 +23,9 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Cette activité permet de filtrer les tag qui seront à afficher sur la carte de l'activité suivante
+ */
 public class ChooseTagActivity extends AppCompatActivity {
 
     UserDto connectedUser;
@@ -70,6 +73,7 @@ public class ChooseTagActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
 
+                // On récupère
                 SparseBooleanArray choice = liste.getCheckedItemPositions();
                 List<TagDto> choosenTags = new ArrayList<TagDto>();
                 for(int i = 0; i < liste.getCount(); i++)

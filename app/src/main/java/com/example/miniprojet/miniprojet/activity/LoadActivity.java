@@ -47,7 +47,7 @@ public class LoadActivity extends AppCompatActivity {
                 if (!isConnected){
                     AlertDialog alertDialog = new AlertDialog.Builder(LoadActivity.this).create();
                     alertDialog.setTitle("Impossible de joindre l'API");
-                    alertDialog.setMessage("Regarder l'erreur ER_API du manuel.");
+                    alertDialog.setMessage("Regarder l'erreur ER_API du manuel ou relancez l'application dans quelques instants.");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {

@@ -75,7 +75,10 @@ public class InterestDisplayerActivity extends AppCompatActivity {
         }
         this.tagListConsultation.setText(tagListText);
 
-        this.descritpionConsultation.setText(this.interest.getDescription());
+        if(this.interest.getDescription() != null)
+        {
+            this.descritpionConsultation.setText(this.interest.getDescription());
+        }
 
         if (this.interest.getDate() != null) {
             SimpleDateFormat formatter = new SimpleDateFormat ("dd/MM/yyyy" );

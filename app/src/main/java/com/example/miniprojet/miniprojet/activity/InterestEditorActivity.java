@@ -66,15 +66,15 @@ public class InterestEditorActivity extends AppCompatActivity {
         finalizeButton = (Button) findViewById(R.id.finalizeButton);
 
 
-        Toast.makeText(this, bitmapLocation.toString(),
-                Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, bitmapLocation.toString(),
+//                Toast.LENGTH_LONG).show();
 
         try {
             Bitmap bitmap = MediaStore.Images.Media
                     .getBitmap(getContentResolver(), selectedImage);
             image.setImageBitmap(bitmap);
-            Toast.makeText(this, selectedImage.toString(),
-                    Toast.LENGTH_LONG).show();
+//            Toast.makeText(this, selectedImage.toString(),
+//                    Toast.LENGTH_LONG).show();
         } catch (IOException e) {
             e.printStackTrace();
         }

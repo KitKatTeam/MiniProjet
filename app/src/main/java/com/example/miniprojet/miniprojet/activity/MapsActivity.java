@@ -82,7 +82,6 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             public void onClick(View view) {
                 //Création d'un intent
                 Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
-                //Intent intent2 = new Intent(this, "android.media.action.IMAGE_CAPTURE");
 
                 //Création du fichier image
                 if(Environment.isExternalStorageEmulated()){
@@ -214,8 +213,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     this.image = (ImageView) findViewById(R.id.imageView);
                     try {
                         //Affichage de l'infobulle
-                        Toast.makeText(this, selectedImage.toString(),
-                                Toast.LENGTH_LONG).show();
+//                        Toast.makeText(this, selectedImage.toString(),
+//                                Toast.LENGTH_LONG).show();
 
 
                         Intent intent = new Intent(MapsActivity.this, PhotoEditorActivity.class);
