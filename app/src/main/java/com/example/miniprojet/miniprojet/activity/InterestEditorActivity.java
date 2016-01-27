@@ -95,7 +95,7 @@ public class InterestEditorActivity extends AppCompatActivity {
 
                 // save image
                 String tagsKeys = "";
-                for (String tag : tagsList.split(",")) {
+                for (String tag : tagsList.trim().split(",")) {
                     tagsKeys += tag;
                 }
                 Integer rnfKey = 0 + (int)(Math.random() * ((1000 - 0) + 1));
@@ -128,14 +128,14 @@ public class InterestEditorActivity extends AppCompatActivity {
                     interestDto.setImage(imageKey);
                     interestDto = interestAPI.add(interestDto);
 
-                    for (String tag : tagsList.split(",")){
+                    for (String tag : tagsList.trim().split(",")){
                         TagDto tagDto = new TagDto();
                         tagDto.setNom(tag);
                         tagDto.setType(TypeLocation.AREA);
                         interestAPI.addTag(interestDto.getId(),tagDto);
                     }
 
-                    Intent intent = new Intent(InterestEditorActivity.this, MapsActivity.class);
+                    Intent intent = new Intent(InterestEditorActivity.this, ChooseTagActivity.class);
                     intent.putExtra("connectedUser", connectedUser);
                     startActivity(intent);
 

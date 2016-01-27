@@ -18,41 +18,31 @@ import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.example.miniprojet.miniprojet.activity.PermissionGps;
-import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
-import com.example.miniprojet.miniprojet.api.klicws.UserAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
+import com.example.miniprojet.miniprojet.api.util.Coordinates;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.example.miniprojet.miniprojet.geolocalisation.MainLocationListener;
 import com.example.miniprojet.miniprojet.rendu.CustomMarker;
 import com.example.miniprojet.miniprojet.rendu.CustomMarkernRendered;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 //import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.File;
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -220,36 +210,27 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
         this.initInterests(clusterManager);
     }
 
-    private void initInterests(ClusterManager<CustomMarker> cM) {
-        /* ta version
-        this.interests = this.interestAPI.getAll();
-        for (InterestDto interest : interests) {
-            if (interest.containsTagsName(this.tagList)) {
-                Float lat = interest.getPositionX();
-                Float lng = interest.getPositionY();
-                String title = interest.getDescription();
-                // mClusterManager.addItem(new CustomMarker(lat, lng, title));
-                //this.map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
-                cM.addItem(new CustomMarker(lat, lng, title, interest));
-
-            }
-
-        }
-        */
-        // ma version
+    private void initInterests(ClusterManager<CustomMarker> clusterManager) {
         List<String> tagsListString = new ArrayList<String>();
         for(TagDto tag : this.tagList){
             tagsListString.add(tag.getNom());
         }
         this.interests = this.interestAPI.findByTags(tagsListString);
+        // Filtre des intérets : quand des intérêts sont situés exactement aux mêmes coordonnées, le clustering reste activé et les marker ne
+        // sont pas séléctionnables. Don, on affiche qu'un seul intérêt par position géographique exacte
+        List<Coordinates> coordinatesAlreadyUsed = new ArrayList<>();
         for (InterestDto interest : interests) {
-
+            Coordinates coordinates = new Coordinates(interest.getPositionX(), interest.getPositionY());
+            if(!coordinatesAlreadyUsed.contains(coordinates))
+            {
                 Float lat = interest.getPositionX();
                 Float lng = interest.getPositionY();
                 String title = interest.getDescription();
                 // mClusterManager.addItem(new CustomMarker(lat, lng, title));
                 //this.map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
-                cM.addItem(new CustomMarker(lat, lng, title, interest));
+                clusterManager.addItem(new CustomMarker(lat, lng, title, interest));
+                coordinatesAlreadyUsed.add(coordinates);
+            }
 
         }
     }

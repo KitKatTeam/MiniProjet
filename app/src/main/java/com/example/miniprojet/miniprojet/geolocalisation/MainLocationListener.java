@@ -26,10 +26,12 @@ public class MainLocationListener implements LocationListener {
     private final Activity mapActivity;
     private String locatioManagerListened = "";
     Location location;
+    private boolean positionUserDisplayed;
 
     public MainLocationListener(LocationManager locationManager, Activity activity) {
         this.locationManager = locationManager;
         this.mapActivity = activity;
+        this.positionUserDisplayed = false;
     }
 
     @Override
@@ -60,13 +62,6 @@ public class MainLocationListener implements LocationListener {
         if (provider.equals(LocationManager.NETWORK_PROVIDER.toString()) && this.locatioManagerListened.equals(LocationManager.NETWORK_PROVIDER)) {
             this.locatioManagerListened = LocationManager.NETWORK_PROVIDER;
             if (ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 5000, 10, this);
@@ -89,13 +84,6 @@ public class MainLocationListener implements LocationListener {
         {
             this.locatioManagerListened = "";
             if (ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this.mapActivity, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-                // TODO: Consider calling
-                //    ActivityCompat#requestPermissions
-                // here to request the missing permissions, and then overriding
-                //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-                //                                          int[] grantResults)
-                // to handle the case where the user grants the permission. See the documentation
-                // for ActivityCompat#requestPermissions for more details.
                 return;
             }
             locationManager.removeUpdates(this);
@@ -109,8 +97,14 @@ public class MainLocationListener implements LocationListener {
         this.location = location;
         ((MapsActivity)this.mapActivity).getMap().animateCamera(CameraUpdateFactory.newLatLngZoom(
                 new LatLng(location.getLatitude(), location.getLongitude()), 13));
-        ((MapsActivity)this.mapActivity).getMap().addMarker(new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Vous êtes ici").icon(BitmapDescriptorFactory
-                .defaultMarker(BitmapDescriptorFactory.HUE_BLUE)));
+            if(!this.positionUserDisplayed)
+            {
+//                // Ne pas afficher le marker de géolocalisation sinon il sera superposé au marker d'une photo qui sera prise au même endroit
+//                MarkerOptions icon = new MarkerOptions().position(new LatLng(location.getLatitude(), location.getLongitude())).title("Vous êtes ici").icon(BitmapDescriptorFactory
+//                        .defaultMarker(BitmapDescriptorFactory.HUE_BLUE));
+//                ((MapsActivity)this.mapActivity).getMap().addMarker(icon);
+                this.positionUserDisplayed = true;
+            }
         }
         ((MapsActivity)this.mapActivity).setLocation(location);
     }
