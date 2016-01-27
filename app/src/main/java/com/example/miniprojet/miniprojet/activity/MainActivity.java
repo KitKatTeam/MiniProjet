@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
                     Intent intent = new Intent(MainActivity.this, ChooseTagActivity.class);
                     intent.putExtra("connectedUser", user);
                     startActivity(intent);
+                    finish();
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
                     alertDialog.setTitle("Oups!");
