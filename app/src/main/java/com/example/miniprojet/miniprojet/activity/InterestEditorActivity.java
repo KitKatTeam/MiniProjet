@@ -86,7 +86,7 @@ public class InterestEditorActivity extends AppCompatActivity {
                 String[] tagList = tagListTextField.getText().toString().trim().split(",");
                 String description = descriptionTextField.getText().toString();
 
-                if (description.equals("") || tagList.length == 0) {
+                if (description.isEmpty() || tagList.length == 0 || tagList[0].isEmpty()) {
                     AlertDialog alertDialog = new AlertDialog.Builder(InterestEditorActivity.this).create();
                     alertDialog.setTitle("Oups!");
                     alertDialog.setMessage("Il nous faut au moins un tag et une description!");
