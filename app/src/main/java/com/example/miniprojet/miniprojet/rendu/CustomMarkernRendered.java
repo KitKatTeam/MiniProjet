@@ -35,7 +35,7 @@ public class CustomMarkernRendered extends DefaultClusterRenderer<CustomMarker> 
         }
         if(item.getTitle() != null)
         {
-            markerOptions.title(item.getTitle() + " (Klicker ICI pour plus de détail");
+            markerOptions.title(item.getTitle() + " (Klickez ICI pour plus de détail)");
 
         }
         super.onBeforeClusterItemRendered(item, markerOptions);

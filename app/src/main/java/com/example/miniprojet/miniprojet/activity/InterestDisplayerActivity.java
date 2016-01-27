@@ -2,18 +2,12 @@ package com.example.miniprojet.miniprojet.activity;
 
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.location.Location;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
-import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.amazon.ManageImages;
@@ -21,8 +15,6 @@ import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 
-import java.io.File;
-import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.concurrent.ExecutionException;
 
@@ -96,7 +88,7 @@ public class InterestDisplayerActivity extends AppCompatActivity {
         buttonRetour.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(InterestDisplayerActivity.this, MapsActivity.class);
+                Intent intent = new Intent(InterestDisplayerActivity.this, ChooseTagActivity.class);
                 intent.putExtra("connectedUser", connectedUser);
                 startActivity(intent);
             }

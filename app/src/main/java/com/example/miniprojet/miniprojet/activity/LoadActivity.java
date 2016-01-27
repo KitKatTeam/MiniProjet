@@ -3,10 +3,9 @@ package com.example.miniprojet.miniprojet.activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.widget.Button;
 import android.widget.TextView;
 
 import com.example.miniprojet.miniprojet.R;
@@ -63,12 +62,8 @@ public class LoadActivity extends AppCompatActivity {
 
                 }
 
-
-
-
             }
         }, secondsDelayed * 1000);
-
 
     }
 

@@ -16,16 +16,14 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.app.FragmentActivity;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
-
-import android.widget.ListView;
 
 import com.example.miniprojet.miniprojet.R;
 import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
@@ -33,21 +31,18 @@ import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
 import com.example.miniprojet.miniprojet.api.util.Coordinates;
-import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.SupportMapFragment;
 import com.example.miniprojet.miniprojet.geolocalisation.MainLocationListener;
 import com.example.miniprojet.miniprojet.rendu.CustomMarker;
 import com.example.miniprojet.miniprojet.rendu.CustomMarkernRendered;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
-//import com.google.maps.android.clustering.ClusterManager;
 import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
-
-//import com.google.maps.android.clustering.ClusterManager;
 
 public class MapsActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -59,11 +54,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     private Uri imageUri;
     private InterestAPI interestAPI;
     List<InterestDto> interests;
-    // Declare a variable for the cluster manager.
-    //private ClusterManager<CustomMarker> mClusterManager;
     private ImageView image;
     private File photo;
-    // Declare a variable for the cluster manager.
     UserDto connectedUser;
     private ListView liste;
     private List<TagDto> tagList;
@@ -108,14 +100,10 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
             }
         });
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
 
-//        MapFragment mapFragment2 = (MapFragment) getFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment2.getMapAsync(this);
         this.locationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
         /** Test si le gps est activé ou non */
         if (!locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER)) {
@@ -142,23 +130,8 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
     }
 
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
     @Override
     public void onMapReady(GoogleMap googleMap) {
-//        mMap = googleMap;
-//
-//        // Add a marker in Sydney and move the camera
-//        LatLng sydney = new LatLng(-34, 151);
-//        mMap.addMarker(new MarkerOptions().position(sydney).title("Marker in Sydney"));
-//        mMap.moveCamera(CameraUpdateFactory.newLatLng(sydney));
         googleMap.setMapType(GoogleMap.MAP_TYPE_HYBRID);
 
 
@@ -167,29 +140,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         locationListener = new MainLocationListener(this.locationManager, this);
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            // TODO: Consider calling
-            //    ActivityCompat#requestPermissions
-            // here to request the missing permissions, and then overriding
-            //   public void onRequestPermissionsResult(int requestCode, String[] permissions,
-            //                                          int[] grantResults)
-            // to handle the case where the user grants the permission. See the documentation
-            // for ActivityCompat#requestPermissions for more details.
             return;
         }
         locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, 1000, 1, locationListener);
 
 
-        // Position the map.
-//getMap().moveCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(51.503186, -0.126446), 10));
-
-        // Initialize the manager with the context and the map.
-        // (Activity extends context, so we can pass 'this' in the constructor.)
         clusterManager = new ClusterManager<CustomMarker>(this, this.map);
         customMarkernRendered = new CustomMarkernRendered(getApplicationContext(), getMap(), clusterManager);
         clusterManager.setRenderer(customMarkernRendered);
 
-        // Point the map's listeners at the listeners implemented by the cluster
-        // manager.
         this.map.setOnCameraChangeListener(clusterManager);
         this.map.setOnMarkerClickListener(clusterManager);
         this.map.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
@@ -227,35 +186,11 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                 Float lat = interest.getPositionX();
                 Float lng = interest.getPositionY();
                 String title = interest.getDescription();
-                // mClusterManager.addItem(new CustomMarker(lat, lng, title));
-                //this.map.addMarker(new MarkerOptions().position(new LatLng(lat, lng)).title(title));
                 clusterManager.addItem(new CustomMarker(lat, lng, title, interest));
                 coordinatesAlreadyUsed.add(coordinates);
             }
 
         }
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
     }
 
     public GoogleMap getMap() {
@@ -278,21 +213,15 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
                     Bitmap bitmap;
                     this.image = (ImageView) findViewById(R.id.imageView);
                     try {
-// GEOLOCALISER
                         //Affichage de l'infobulle
                         Toast.makeText(this, selectedImage.toString(),
                                 Toast.LENGTH_LONG).show();
 
 
-//                        startActivity(new Intent(this, PhotoEditorActivity.class)
-//                                .setData(selectedImage));
-
                         Intent intent = new Intent(MapsActivity.this, PhotoEditorActivity.class);
                         intent.putExtra("imageUri", selectedImage);
                         intent.putExtra("connectedUser", connectedUser);
                         intent.putExtra("location", this.locationListener.getLocation());
-                        intent.putExtra("latitude", this.locationListener.getLocation().getLatitude());
-                        intent.putExtra("longitude", this.locationListener.getLocation().getLongitude());
                         startActivity(intent);
                     } catch (Exception e) {
                         e.printStackTrace();

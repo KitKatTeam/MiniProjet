@@ -2,7 +2,6 @@ package com.example.miniprojet.miniprojet.activity;
 
 import android.content.Intent;
 import android.graphics.Typeface;
-import android.support.v4.app.FragmentActivity;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.SparseBooleanArray;
@@ -19,7 +18,6 @@ import com.example.miniprojet.miniprojet.api.klicws.InterestAPI;
 import com.example.miniprojet.miniprojet.api.klicws.dto.InterestDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.TagDto;
 import com.example.miniprojet.miniprojet.api.klicws.dto.UserDto;
-//import com.google.maps.android.clustering.ClusterManager;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -47,9 +45,6 @@ public class ChooseTagActivity extends AppCompatActivity {
         liste = (ListView) findViewById(R.id.listView);
         chooseTagButton = (Button) findViewById(R.id.choose_tag_button);
 
-
-
-
         for (InterestDto interestDto:
                 InterestAPI.getInstance().getAll()) {
             for (TagDto tag:
@@ -63,7 +58,6 @@ public class ChooseTagActivity extends AppCompatActivity {
         }
 
         adapter = new ArrayAdapter<TagDto>(this, android.R.layout.simple_list_item_multiple_choice, tagList);
-//        adapter = new CustomAdapter(getApplicationContext(), tagList);
 
         liste.setChoiceMode(liste.CHOICE_MODE_MULTIPLE);
         liste.setAdapter(adapter);
@@ -71,21 +65,6 @@ public class ChooseTagActivity extends AppCompatActivity {
         for (int i = 0; i < tagList.size(); i++) {
             liste.setItemChecked(i, true);
         }
-        liste.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-            @Override
-            public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                liste.setItemChecked(i, !liste.isItemChecked(i));
-            }
-
-
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-        });
-
-
 
         chooseTagButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -109,11 +88,5 @@ public class ChooseTagActivity extends AppCompatActivity {
             }
         });
 
-    }
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_main, menu);
-        return true;
     }
 }

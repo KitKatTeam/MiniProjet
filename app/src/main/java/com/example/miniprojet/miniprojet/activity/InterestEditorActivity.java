@@ -10,7 +10,6 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -86,8 +85,6 @@ public class InterestEditorActivity extends AppCompatActivity {
                 String[] tagList = tagListTextField.getText().toString().trim().split(",");
                 String description = descriptionTextField.getText().toString();
 
-
-
                 // get values
                 String tagsList = tagListTextField.getText().toString();
                 String descriptionInterest = descriptionTextField.getText().toString();
@@ -138,7 +135,7 @@ public class InterestEditorActivity extends AppCompatActivity {
 
                     Intent intent = new Intent(InterestEditorActivity.this, ChooseTagActivity.class);
                     error = false;
-                    
+
                     intent.putExtra("connectedUser", connectedUser);
                     List<TagDto> listT = (List<TagDto>) getIntent().getSerializableExtra("tagList");
                     intent.putExtra("tagList", (Serializable) listT);
