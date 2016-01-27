@@ -98,7 +98,7 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.connectedUser = (UserDto) getIntent().getSerializableExtra("connectedUser");
 
         TextView userNameBar = (TextView) findViewById(R.id.userNameBar);
-        userNameBar.setText("user: "+connectedUser.getEmail());
+        userNameBar.setText("user: "+connectedUser.getUsername() + " ("+connectedUser.getEmail()+")");
         this.bouton = (ImageButton) findViewById(R.id.imageButton);
         this.bouton.setOnClickListener(new View.OnClickListener() {
             @Override
