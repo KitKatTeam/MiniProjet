@@ -29,14 +29,16 @@ public class SubscriptionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-                EditText sub_username = (EditText) findViewById(R.id.sub_username);
-                EditText sub_email = (EditText) findViewById(R.id.sub_email);
-                EditText sub_password = (EditText) findViewById(R.id.sub_password);
+            EditText sub_username = (EditText) findViewById(R.id.sub_username);
+            EditText sub_email = (EditText) findViewById(R.id.sub_email);
+            EditText sub_password = (EditText) findViewById(R.id.sub_password);
+
+            if (!sub_username.getText().toString().equals("") && !sub_email.getText().toString().equals("") && !sub_password.getText().toString().equals("")) {
 
                 UserAPI userAPI = UserAPI.getInstance();
-                UserDto userDto = userAPI.subscribe(sub_username.getText().toString(),sub_email.getText().toString(),sub_password.getText().toString());
+                UserDto userDto = userAPI.subscribe(sub_username.getText().toString(), sub_email.getText().toString(), sub_password.getText().toString());
 
-                if (userDto != null){
+                if (userDto != null) {
 
                     AlertDialog alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
                     alertDialog.setTitle("Bienvenue sur clic!");
@@ -52,7 +54,7 @@ public class SubscriptionActivity extends AppCompatActivity {
                     alertDialog.show();
 
 
-                }else{
+                } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
                     alertDialog.setTitle("Impossible d'ajouter un nouvel utilisateur!");
                     alertDialog.setMessage("Regarder l'erreur ER_API du manuel.");
@@ -65,6 +67,19 @@ public class SubscriptionActivity extends AppCompatActivity {
                             });
                     alertDialog.show();
                 }
+            }else{
+                AlertDialog alertDialog = new AlertDialog.Builder(SubscriptionActivity.this).create();
+                alertDialog.setTitle("Oups!");
+                alertDialog.setMessage("Tous les champs doivent être remplies.");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+
+                            }
+                        });
+                alertDialog.show();
+            }
 
 
             }
