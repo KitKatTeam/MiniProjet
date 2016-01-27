@@ -86,11 +86,25 @@ public class InterestEditorActivity extends AppCompatActivity {
                 String[] tagList = tagListTextField.getText().toString().trim().split(",");
                 String description = descriptionTextField.getText().toString();
 
-                // get values
-                String tagsList = tagListTextField.getText().toString();
-                String descriptionInterest = descriptionTextField.getText().toString();
-                Double lat = bitmapLocation.getLatitude();
-                Double lon = bitmapLocation.getLongitude();
+                if (description.equals("") || tagList.length == 0) {
+                    AlertDialog alertDialog = new AlertDialog.Builder(InterestEditorActivity.this).create();
+                    alertDialog.setTitle("Oups!");
+                    alertDialog.setMessage("Il nous faut au moins un tag et une description!");
+                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                            new DialogInterface.OnClickListener() {
+                                public void onClick(DialogInterface dialog, int which) {
+                                    dialog.dismiss();
+
+                                }
+                            });
+                    alertDialog.show();
+                }else{
+
+                    // get values
+                    String tagsList = tagListTextField.getText().toString();
+                    String descriptionInterest = descriptionTextField.getText().toString();
+                    Double lat = bitmapLocation.getLatitude();
+                    Double lon = bitmapLocation.getLongitude();
 
                 // save image
                 String tagsKeys = "";
@@ -100,32 +114,32 @@ public class InterestEditorActivity extends AppCompatActivity {
                 Integer rnfKey = 0 + (int)(Math.random() * ((1000 - 0) + 1));
                 String imageKey = tagsKeys+rnfKey.toString()+lat.toString();
 
-                ManageImages manageImages = new ManageImages();
-                //Création du fichier image
-                File file;
-                if(Environment.isExternalStorageEmulated()){
-                    file = new File(Environment.getExternalStorageDirectory(), title);
-                } else {
-                    file = new File("/mnt/emmc/",  title);
-                }
+                    ManageImages manageImages = new ManageImages();
+                    //Création du fichier image
+                    File file;
+                    if(Environment.isExternalStorageEmulated()){
+                        file = new File(Environment.getExternalStorageDirectory(), title);
+                    } else {
+                        file = new File("/mnt/emmc/",  title);
+                    }
 
-                manageImages.setPhoto(file);
-                manageImages.setKeyName(imageKey);
-                manageImages.execute("Upload");
-                Boolean error = true;
-                try {
+                    manageImages.setPhoto(file);
+                    manageImages.setKeyName(imageKey);
+                    manageImages.execute("Upload");
+                    Boolean error = true;
+                    try {
 
-                    manageImages.get();
+                        manageImages.get();
 
-                    // save interest
-                    InterestAPI interestAPI = InterestAPI.getInstance();
-                    InterestDto interestDto = new InterestDto();
-                    interestDto.setDescription(descriptionInterest);
-                    interestDto.setUserId(connectedUser.getId());
-                    interestDto.setPositionX(lat.floatValue());
-                    interestDto.setPositionY(lon.floatValue());
-                    interestDto.setImage(imageKey);
-                    interestDto = interestAPI.add(interestDto);
+                        // save interest
+                        InterestAPI interestAPI = InterestAPI.getInstance();
+                        InterestDto interestDto = new InterestDto();
+                        interestDto.setDescription(descriptionInterest);
+                        interestDto.setUserId(connectedUser.getId());
+                        interestDto.setPositionX(lat.floatValue());
+                        interestDto.setPositionY(lon.floatValue());
+                        interestDto.setImage(imageKey);
+                        interestDto = interestAPI.add(interestDto);
 
                     for (String tag : tagsList.split(",")){
                         TagDto tagDto = new TagDto();
@@ -134,35 +148,38 @@ public class InterestEditorActivity extends AppCompatActivity {
                         interestAPI.addTag(interestDto.getId(),tagDto);
                     }
 
-                    Intent intent = new Intent(InterestEditorActivity.this, ChooseTagActivity.class);
-                    error = false;
+                        Intent intent = new Intent(InterestEditorActivity.this, ChooseTagActivity.class);
+                        error = false;
 
-                    intent.putExtra("connectedUser", connectedUser);
-                    List<TagDto> listT = (List<TagDto>) getIntent().getSerializableExtra("tagList");
-                    intent.putExtra("tagList", (Serializable) listT);
-                    startActivity(intent);
+                        intent.putExtra("connectedUser", connectedUser);
+                        List<TagDto> listT = (List<TagDto>) getIntent().getSerializableExtra("tagList");
+                        intent.putExtra("tagList", (Serializable) listT);
+                        startActivity(intent);
 
-                } catch (InterruptedException e) {
-                    e.printStackTrace();
+                    } catch (InterruptedException e) {
+                        e.printStackTrace();
 
-                } catch (ExecutionException e) {
-                    e.printStackTrace();
+                    } catch (ExecutionException e) {
+                        e.printStackTrace();
+
+                    }
+
+                    if (error){
+                        AlertDialog alertDialog = new AlertDialog.Builder(InterestEditorActivity.this).create();
+                        alertDialog.setTitle("Impossible d'uploader l'image!");
+                        alertDialog.setMessage("ER_UPLOAD");
+                        alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                                new DialogInterface.OnClickListener() {
+                                    public void onClick(DialogInterface dialog, int which) {
+                                        dialog.dismiss();
+
+                                    }
+                                });
+                        alertDialog.show();
+                    }
 
                 }
 
-                if (error){
-                    AlertDialog alertDialog = new AlertDialog.Builder(InterestEditorActivity.this).create();
-                    alertDialog.setTitle("Impossible d'uploader l'image!");
-                    alertDialog.setMessage("ER_UPLOAD");
-                    alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                            new DialogInterface.OnClickListener() {
-                                public void onClick(DialogInterface dialog, int which) {
-                                    dialog.dismiss();
-
-                                }
-                            });
-                    alertDialog.show();
-                }
 
             }
         });

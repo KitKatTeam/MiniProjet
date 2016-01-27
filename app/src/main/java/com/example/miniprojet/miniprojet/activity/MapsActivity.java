@@ -182,18 +182,21 @@ public class MapsActivity extends AppCompatActivity implements OnMapReadyCallbac
         this.interests = this.interestAPI.findByTags(tagsListString);
         // Filtre des intérets : quand des intérêts sont situés exactement aux mêmes coordonnées, le clustering reste activé et les marker ne
         // sont pas séléctionnables. Don, on affiche qu'un seul intérêt par position géographique exacte
-        List<Coordinates> coordinatesAlreadyUsed = new ArrayList<>();
-        for (InterestDto interest : interests) {
-            Coordinates coordinates = new Coordinates(interest.getPositionX(), interest.getPositionY());
-            if(!coordinatesAlreadyUsed.contains(coordinates))
-            {
-                Float lat = interest.getPositionX();
-                Float lng = interest.getPositionY();
-                String title = interest.getDescription();
-                clusterManager.addItem(new CustomMarker(lat, lng, title, interest));
-                coordinatesAlreadyUsed.add(coordinates);
-            }
+        if(this.interests != null)
+        {
+            List<Coordinates> coordinatesAlreadyUsed = new ArrayList<>();
+            for (InterestDto interest : interests) {
+                Coordinates coordinates = new Coordinates(interest.getPositionX(), interest.getPositionY());
+                if(!coordinatesAlreadyUsed.contains(coordinates))
+                {
+                    Float lat = interest.getPositionX();
+                    Float lng = interest.getPositionY();
+                    String title = interest.getDescription();
+                    clusterManager.addItem(new CustomMarker(lat, lng, title, interest));
+                    coordinatesAlreadyUsed.add(coordinates);
+                }
 
+            }
         }
     }
 

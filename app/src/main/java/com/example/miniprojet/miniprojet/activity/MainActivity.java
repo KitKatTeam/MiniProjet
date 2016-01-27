@@ -65,14 +65,14 @@ public class MainActivity extends AppCompatActivity {
                 UserDto user = userAPI.login(userName, userPassword);
 
                 // pass or not
-                if (user != null) {
+                if (user != null && !userName.equals("")) {
                     Intent intent = new Intent(MainActivity.this, ChooseTagActivity.class);
                     intent.putExtra("connectedUser", user);
                     startActivity(intent);
                 } else {
                     AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this).create();
-                    alertDialog.setTitle("Impossible de se connecter!");
-                    alertDialog.setMessage("user: test@gmail.com, pass: test");
+                    alertDialog.setTitle("Oups!");
+                    alertDialog.setMessage("Impossible de se connecter!");
                     alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
                             new DialogInterface.OnClickListener() {
                                 public void onClick(DialogInterface dialog, int which) {
